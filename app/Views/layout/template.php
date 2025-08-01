@@ -107,7 +107,7 @@ if (!empty($categoriesAktivitas)) {
     - custom css link
   -->
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
-
+    <link rel="canonical" href="<?= isset($canonical) && !empty($canonical) ? $canonical : base_url() ?>">
     <!-- 
     - google font link
   -->
@@ -169,8 +169,14 @@ if (!empty($categoriesAktivitas)) {
                     </li>
 
                     <!-- Dropdown Aktivitas -->
+                    <?php
+                    $uriSegments = explode('/', uri_string());
+                    $currentPath = $uriSegments[1] ?? ''; // Ambil segmen kedua setelah bahasa
+                    $isActivityActive = ($currentPath === $activityLink);
+                    ?>
+
                     <li class="navbar-item dropdown">
-                        <a href="#" class="navbar-link dropdown-toggle <?= (uri_string() === $activityLink || str_contains(uri_string(), $activityLink)) ? 'active' : '' ?>" data-nav-link>
+                        <a href="#" class="navbar-link dropdown-toggle <?= $isActivityActive ? 'active' : '' ?>" data-nav-link>
                             <span><?= lang('bahasa.Aktivitas'); ?></span>
                             <ion-icon name="chevron-down-outline" class="chevron-icon" aria-hidden="true"></ion-icon>
                         </a>
@@ -193,6 +199,7 @@ if (!empty($categoriesAktivitas)) {
                             <?php endif; ?>
                         </ul>
                     </li>
+
 
                     <!-- Dropdown blog -->
                     <li class="navbar-item dropdown">
