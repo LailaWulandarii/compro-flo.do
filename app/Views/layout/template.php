@@ -170,28 +170,53 @@ if (!empty($categoriesAktivitas)) {
 
                     <!-- Dropdown Aktivitas -->
                     <li class="navbar-item dropdown">
-                        <a href="#" class="navbar-link dropdown-toggle" data-nav-link>
-                            <span>Aktivitas</span>
+                        <a href="#" class="navbar-link dropdown-toggle <?= (uri_string() === $activityLink || str_contains(uri_string(), $activityLink)) ? 'active' : '' ?>" data-nav-link>
+                            <span><?= lang('bahasa.Aktivitas'); ?></span>
                             <ion-icon name="chevron-down-outline" class="chevron-icon" aria-hidden="true"></ion-icon>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="aktivitas.html">Workshop</a></li>
-                            <li><a href="aktivitas.html">Kreasi</a></li>
-                            <li><a href="aktivitas.html">Komunitas</a></li>
+                            <li>
+                                <a href="<?= base_url($lang . '/' . $activityLink) ?>">
+                                    <?= $lang == 'id' ? 'Semua Aktivitas' : 'All Activity'; ?>
+                                </a>
+                            </li>
+                            <?php if (!empty($kategoriAktivitasLinks)): ?>
+                                <?php foreach ($kategoriAktivitasLinks as $kategoriAktivitasLink): ?>
+                                    <li>
+                                        <a href="<?= $kategoriAktivitasLink['url']; ?>">
+                                            <?= $kategoriAktivitasLink['name']; ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><a><?= $lang == 'id' ? 'Tidak ada kategori' : 'No Categories available'; ?></a></li>
+                            <?php endif; ?>
                         </ul>
                     </li>
 
-
                     <!-- Dropdown blog -->
                     <li class="navbar-item dropdown">
-                        <a href="#" class="navbar-link dropdown-toggle" data-nav-link>
-                            <span>Artikel</span>
+                        <a href="#" class="navbar-link dropdown-toggle <?= (uri_string() === $articleLink || str_contains(uri_string(), $articleLink)) ? 'active' : '' ?>" data-nav-link>
+                            <span><?= lang('bahasa.Artikel'); ?></span>
                             <ion-icon name="chevron-down-outline" class="chevron-icon" aria-hidden="true"></ion-icon>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="artikel.html">Teknik</a></li>
-                            <li><a href="artikel.html">Visual</a></li>
-                            <li><a href="artikel.html">Cerita</a></li>
+                            <li>
+                                <a href="<?= base_url($lang . '/' . $articleLink) ?>">
+                                    <?= $lang == 'id' ? 'Semua Artikel' : 'All Article'; ?>
+                                </a>
+                            </li>
+                            <?php if (!empty($categoryLinks)): ?>
+                                <?php foreach ($categoryLinks as $categoryLink): ?>
+                                    <li>
+                                        <a href="<?= $categoryLink['url']; ?>">
+                                            <?= $categoryLink['name']; ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><a><?= $lang == 'id' ? 'Tidak ada kategori' : 'No Categories available'; ?></a></li>
+                            <?php endif; ?>
                         </ul>
                     </li>
 
@@ -241,121 +266,104 @@ if (!empty($categoriesAktivitas)) {
 
     <footer class="footer">
         <div class="container">
-
             <div class="footer-top section">
 
+                <!-- Brand -->
                 <div class="footer-brand">
-                    <a href="#" class="logo" style="color: white;">Flo.do</a>
+                    <a href="<?= base_url($lang . '/') ?>" class="logo" style="color: white;">
+                        <?= $profil['nama_perusahaan'] ?? 'Flo.do'; ?>
+                    </a>
                 </div>
 
+                <!-- Tautan Berguna -->
                 <ul class="footer-list">
-
                     <li>
-                        <p class="footer-list-title">Tautan Berguna</p>
+                        <p class="footer-list-title"><?= lang('bahasa.headerLink'); ?></p>
                     </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Beranda</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Tentang</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Artikel</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Produk</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Kontak</a>
-                    </li>
-
+                    <li><a href="<?= base_url($lang . '/' . $homeLink) ?>" class="footer-link"><?= lang('bahasa.Beranda'); ?></a></li>
+                    <li><a href="<?= base_url($lang . '/' . $aboutLink) ?>" class="footer-link"><?= lang('bahasa.Tentang'); ?></a></li>
+                    <li><a href="<?= base_url($lang . '/' . $articleLink) ?>" class="footer-link"><?= lang('bahasa.Artikel'); ?></a></li>
+                    <li><a href="<?= base_url($lang . '/' . $productLink) ?>" class="footer-link"><?= lang('bahasa.Produk'); ?></a></li>
+                    <li><a href="<?= base_url($lang . '/' . $contactLink) ?>" class="footer-link"><?= lang('bahasa.Kontak'); ?></a></li>
                 </ul>
 
+                <!-- Artikel Kami -->
                 <ul class="footer-list">
-
                     <li>
-                        <p class="footer-list-title">Artikel Kami</p>
+                        <p class="footer-list-title"><?= lang('bahasa.headerService'); ?></p>
                     </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Teknik</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Visual</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Cerita</a>
-                    </li>
-
+                    <?php if (!empty($kategori_teratas)): ?>
+                        <?php foreach ($kategori_teratas as $kategori): ?>
+                            <li>
+                                <a href="<?= base_url($lang . '/' . $articleLink . '/' . $kategori['slug_kategori_id']) ?>" class="footer-link">
+                                    <?= $kategori['nama_kategori_id']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li>
+                            <p class="footer-link">No categories available</p>
+                        </li>
+                    <?php endif; ?>
                 </ul>
 
+                <!-- Sosial Media -->
                 <ul class="footer-list">
-
                     <li>
-                        <p class="footer-list-title">Ikuti Kami di</p>
+                        <p class="footer-list-title"><?= lang('bahasa.sosmedLink'); ?></p>
                     </li>
-                    <li>
-                        <a href="#" class="footer-link">
-                            <ion-icon name="logo-instagram" class="social-icon" aria-hidden="true"></ion-icon>
-                            Instagram
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">
-                            <ion-icon name="logo-tiktok" class="social-icon" aria-hidden="true"></ion-icon>
-                            TikTok
-                        </a>
-                    </li>
-
+                    <?php if (!empty($sosmed)): ?>
+                        <?php foreach ($sosmed as $s): ?>
+                            <li>
+                                <a href="<?= $s['link_sosmed']; ?>" class="footer-link" target="_blank">
+                                    <ion-icon name="logo-<?= strtolower($s['nama_sosmed']); ?>" class="social-icon" aria-hidden="true"></ion-icon>
+                                    <?= $s['nama_sosmed']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li>
+                            <p class="footer-link">No social media available</p>
+                        </li>
+                    <?php endif; ?>
                 </ul>
+
+                <!-- Marketplace -->
                 <ul class="footer-list">
-
                     <li>
-                        <p class="footer-list-title">Marketplace </p>
+                        <p class="footer-list-title"><?= lang('bahasa.marketplaceLink'); ?></p>
                     </li>
-
-                    <li>
-                        <p href="#" class="footer-link">No market place available</p>
-                    </li>
-
+                    <?php if (!empty($marketplace)): ?>
+                        <?php foreach ($marketplace as $m): ?>
+                            <li>
+                                <a href="<?= $m['link_marketplace']; ?>" class="footer-link" target="_blank">
+                                    <?= $m['nama_marketplace']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li>
+                            <p class="footer-link">No marketplace available</p>
+                        </li>
+                    <?php endif; ?>
                 </ul>
 
             </div>
 
+            <!-- Footer Bottom -->
             <div class="footer-bottom">
-
                 <p class="copyright">
-                    &copy; 2022 Pixology. All Rights Reserved by codewithsadee
+                    &copy; <?= date('Y'); ?> Flo.do. All Rights Reserved.
                 </p>
-
                 <ul class="footer-bottom-list">
-
-                    <li>
-                        <a href="#" class="footer-bottom-link">Terms and conditions</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-bottom-link">Privacy policy</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-bottom-link">Login / Signup</a>
-                    </li>
-
+                    <li><a href="#" class="footer-bottom-link">Terms and conditions</a></li>
+                    <li><a href="#" class="footer-bottom-link">Privacy policy</a></li>
+                    <li><a href="#" class="footer-bottom-link">Login / Signup</a></li>
                 </ul>
-
             </div>
-
         </div>
     </footer>
+
 
 
 
