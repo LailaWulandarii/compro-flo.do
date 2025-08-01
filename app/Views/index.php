@@ -3,32 +3,27 @@
 <?= $this->section('content'); ?>
 <article>
 
-  <!-- 
-        - #HERO
-      -->
-
+  <!-- slider -->
   <section class="section hero" id="beranda" aria-label="hero">
     <div class="container">
       <div class="hero-content">
         <h1 class="h1 hero-title">
-          Bloom your <span class="has-before">Memories</span> with us
+          <?= $lang === 'id' ? $slider[0]['caption_slider_id'] : $slider[0]['caption_slider_en']; ?>
         </h1>
       </div>
 
       <div class="hero-carousel">
-        <div class="slide active">
-          <img src="./assets/img/hero1.png" alt="Slide 1">
-        </div>
-        <div class="slide">
-          <img src="./assets/img/hero2.png" alt="Slide 2">
-        </div>
-        <div class="slide">
-          <img src="./assets/img/hero3.png" alt="Slide 3">
-        </div>
+        <?php foreach ($slider as $index => $slide): ?>
+          <div class="slide <?= $index === 0 ? 'active' : ''; ?>">
+            <img src="<?= base_url('assets/img/slider/' . $slide['foto_slider']) ?>"
+              alt="<?= $lang === 'id' ? $slide['alt_foto_slider_id'] : $slide['alt_foto_slider_en']; ?>">
+          </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
 
+  <!-- about -->
   <section class="section tentang has-bg-image" id="tentang" aria-label="tentang"
     style="background-color: var(--light-pink)">
     <div class="container">
@@ -40,16 +35,15 @@
 
       <div class="tentang-content">
 
-        <p class="section-subtitle has-before">Tentang</p>
-
+        <p class="section-subtitle has-before">
+          <?= $lang == 'id' ? $aboutMeta['nama_halaman_id'] : $aboutMeta['nama_halaman_en']; ?>
+        </p>
         <h2 class="h2 section-title">
-          <span class="has-before">Flo.do |</span>
+          <span class="has-before"><?= $lang == 'id' ? $aboutMeta['deskripsi_halaman_id'] : $aboutMeta['deskripsi_halaman_en']; ?> |</span>
         </h2>
-        <p class="card-text">Florist adalah penyedia dekorasi bunga dan interior yang
-          menghadirkan keindahan alami
-          ke dalam ruang
-          Anda. Dengan sentuhan artistik dan pengalaman profesional, kami telah dipercaya oleh ratusan klien untuk
-          menciptakan suasana yang elegan dan penuh makna.</p>
+        <p class="card-text">
+          <?= $lang == 'id' ? $profil['deskripsi_perusahaan_id'] : $profil['deskripsi_perusahaan_en']; ?>
+        </p>
         <br>
         <a class="see-more" style="font-size: 1.6rem;" href="tentang.html">Baca Selengkapnya</a>
       </div>
@@ -57,342 +51,197 @@
     </div>
   </section>
 
-  <!-- 
-        - #PRODUK
-      -->
-
+  <!-- produk -->
   <section class=" section produk" id="produk" aria-label="produk">
     <div class="container">
 
-      <p class="section-subtitle has-before text-left">Produk</p>
+      <p class="section-subtitle has-before text-left">
+        <?= $lang == 'id' ? $productMeta['nama_halaman_id'] : $productMeta['nama_halaman_en']; ?>
+      </p>
+
       <div class="row header-row">
         <h2 class="h2 section-title text-left">
-          Temukan produk <span class="has-before">terbaik</span> kami
+          <?= $lang == 'id' ? $productMeta['deskripsi_halaman_id'] : $productMeta['deskripsi_halaman_en']; ?>
         </h2>
-        <a class="h2 section-title text-right see-more" href="produk.html">Lihat Selengkapnya</a>
+        <a class="h2 section-title text-right see-more" href="<?= base_url($lang == 'id' ? 'id/produk' : 'en/product'); ?>">
+          <?= lang('bahasa.Lihat Semua'); ?>
+        </a>
       </div>
 
       <ul class="grid-list">
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 835; --height: 429;">
-              <img src="./assets/img/premium fresh-4.jpg" width="835" height="429" loading="lazy"
-                alt="Premium Fresh Flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Premium Fresh Flowers</a>
-              </h4>
+        <?php foreach (array_slice($product, 0, 5) as $p): ?>
+          <li>
+            <div class="produk-card">
+              <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
+                <img src="<?= base_url('assets/img/produk/' . $p['foto_produk']); ?>"
+                  alt="<?= $lang == 'id' ? $p['alt_produk_id'] : $p['alt_produk_en']; ?>"
+                  class="img-cover" loading="lazy">
+              </figure>
+              <div class="card-content">
+                <h4 class="h4">
+                  <a href="<?= base_url($lang == 'id'
+                              ? 'id/produk/' . $p['slug_id']
+                              : 'en/product/' . $p['slug_en']); ?>"
+                    class="card-title">
+                    <?= $lang == 'id' ? $p['nama_produk_id'] : $p['nama_produk_en']; ?>
+                  </a>
+                </h4>
+              </div>
             </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/fresh flowers-1.jpg" width="416" height="429" loading="lazy"
-                alt="Fresh Flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Fresh Flowers</a>
-              </h4>
-            </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/artificial flowers-1.jpg" width="416" height="429" loading="lazy"
-                alt="Artificial Flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Artificial Flowers</a>
-              </h4>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/hand bouqet-1.jpg" width="416" height="429" loading="lazy" alt="Hand Bouqet"
-                class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Hand Bouqet</a>
-              </h4>
-            </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/standing flowers-1.jpg" width="416" height="429" loading="lazy"
-                alt="standing flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Standing Flowers</a>
-              </h4>
-            </div>
-
-          </div>
-        </li>
-
+          </li>
+        <?php endforeach; ?>
       </ul>
+
 
     </div>
   </section>
 
-  <!-- 
-        - #AKTIVITAS
-      -->
-
+  <!-- aktivitas -->
   <section class="section aktivitas" id="aktivitas" aria-label="aktivitas">
     <div class="container">
-      <p class="section-subtitle has-before text-left">Aktivitas</p>
+      <p class="section-subtitle has-before text-left">
+        <?= $lang == 'id' ? $aktivitasMeta['nama_halaman_id'] : $aktivitasMeta['nama_halaman_en']; ?>
+      </p>
 
       <div class="row header-row">
-        <h2 class="h2 section-title text-left">Aktivitas <span class="has-before">menarik</span> kami</h2>
-        <a href="aktivitas.html" class="h2 section-title text-right see-more">Lihat Selengkapnya</a>
+        <h2 class="h2 section-title text-left">
+          <?= $lang == 'id' ? $aktivitasMeta['deskripsi_halaman_id'] : $aktivitasMeta['deskripsi_halaman_en']; ?>
+        </h2>
+        <a href="<?= base_url($lang == 'id' ? 'id/aktivitas' : 'en/activity'); ?>" class="h2 section-title text-right see-more">
+          <?= lang('bahasa.Lihat Semua'); ?>
+        </a>
       </div>
+
       <ul class="grid-list aktivitas-list">
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
+        <?php foreach (array_slice($aktivitas, 0, 4) as $a): ?>
+          <li>
+            <a href="<?= base_url(
+                        $lang == 'id'
+                          ? 'id/aktivitas/' . (!empty($a['slug_kategori_id']) ? $a['slug_kategori_id'] : 'kategori-tidak-ditemukan') . '/' . (!empty($a['slug_aktivitas_id']) ? $a['slug_aktivitas_id'] : 'aktivitas-tidak-ditemukan')
+                          : 'en/activity/' . (!empty($a['slug_kategori_en']) ? $a['slug_kategori_en'] : 'category-not-found') . '/' . (!empty($a['slug_aktivitas_en']) ? $a['slug_aktivitas_en'] : 'activity-not-found')
+                      ); ?>" class="aktivitas-link">
+              <div class="aktivitas-card">
+                <img src="<?= base_url('assets/img/aktivitas/' . $a['foto_aktivitas']); ?>"
+                  alt="<?= $lang == 'id' ? $a['alt_aktivitas_id'] : $a['alt_aktivitas_en']; ?>"
+                  class="aktivitas-img" width="100" loading="lazy">
 
-              <h3 class="h3">Workshop Merangkai</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
+                <h3 class="h3"><?= $lang == 'id' ? $a['judul_aktivitas_id'] : $a['judul_aktivitas_en']; ?></h3>
+                <div class="meta-row">
+                  <p class="kategori">
+                    <?= $lang == 'id' ? $a['nama_kategori_id'] : $a['nama_kategori_en']; ?>
+                  </p>
+                </div>
+                <p class="deskripsi">
+                  <?= $lang == 'id' ? $a['snippet_id'] : $a['snippet_en']; ?>
+                </p>
+                <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;">
+                  <?= lang('bahasa.Baca Selengkapnya'); ?>
+                </a>
               </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p>
-              <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
-
-              <h3 class="h3">Kolaborasi Brand</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
-              </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p>
-              <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
-
-              <h3 class="h3">Flo.do x Amigo cake</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
-              </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p>
-              <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
-
-              <h3 class="h3">Flower Arrangement</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
-              </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p>
-              <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
+            </a>
+          </li>
+        <?php endforeach; ?>
       </ul>
+
 
     </div>
   </section>
 
-  <!-- 
-        - #blog
-      -->
-
+  <!-- artikel -->
   <section class="section blog" id="artikel" aria-label="artikel">
     <div class="container">
 
-      <p class="section-subtitle text-center has-before">Artikel</p>
+      <p class="section-subtitle text-center has-before">
+        <?= $lang == 'id' ? $articleMeta['nama_halaman_id'] : $articleMeta['nama_halaman_en']; ?>
+      </p>
 
       <h2 class="h2 section-title text-center">
-        Jelajahi artikel <span class="has-before">ter-populer</span>
+        <?= $lang == 'id' ? $articleMeta['deskripsi_halaman_id'] : $articleMeta['deskripsi_halaman_en']; ?>
       </h2>
+
       <ul class="blog-list">
 
-        <li>
-          <div class="blog-card large">
-
-            <figure class="card-banner large-banner">
-              <img src="./assets/img/hero1.png" width="644" height="363" loading="lazy"
-                alt="Godaddy user flow solution..." class="img-cover">
-            </figure>
-
-            <div class="card-content">
-
-              <div class="wrapper">
-                <a href="#" class="tag">Development</a>
-                <div class="publish-date">
-                  <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-
-                  <span class="span" style="font-size: 1.5rem;">July 22, 2022</span>
+        <?php if (!empty($article)): ?>
+          <li>
+            <div class="blog-card large">
+              <figure class="card-banner large-banner">
+                <img src="<?= base_url('assets/img/artikel/' . $article[0]['foto_artikel']); ?>"
+                  alt="<?= $lang == 'id' ? $article[0]['alt_artikel_id'] : $article[0]['alt_artikel_en']; ?>"
+                  class="img-cover" loading="lazy">
+              </figure>
+              <div class="card-content">
+                <div class="wrapper">
+                  <a href="#" class="tag"><?= $lang == 'id' ? $article[0]['nama_kategori'] : $article[0]['nama_kategori']; ?></a>
+                  <div class="publish-date">
+                    <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                    <span class="span" style="font-size: 1.5rem;">
+                      <?= date('F j, Y', strtotime($article[0]['created_at'])); ?>
+                    </span>
+                  </div>
                 </div>
+                <h3>
+                  <a href="<?= base_url($lang == 'id'
+                              ? 'id/artikel/' . $article[0]['slug_kategori_id'] . '/' . $article[0]['slug_artikel_id']
+                              : 'en/article/' . $article[0]['slug_kategori_en'] . '/' . $article[0]['slug_artikel_en']); ?>"
+                    class="card-title" style="margin-top: 10px;">
+                    <?= $lang == 'id' ? $article[0]['judul_artikel_id'] : $article[0]['judul_artikel_en']; ?>
+                  </a>
+                </h3>
+                <p class="card-text">
+                  <?= $lang == 'id' ? $article[0]['snippet_id'] : $article[0]['snippet_en']; ?>
+                </p>
+                <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;"
+                  href="<?= base_url($lang == 'id'
+                          ? 'id/artikel/' . $article[0]['slug_kategori_id'] . '/' . $article[0]['slug_artikel_id']
+                          : 'en/article/' . $article[0]['slug_kategori_en'] . '/' . $article[0]['slug_artikel_en']); ?>">
+                  <?= lang('bahasa.Baca Selengkapnya'); ?>
+                </a>
               </div>
-
-
-              <h3>
-                <a href="#" class="card-title" style="margin-top: 10px;">Godaddy user flow solution...</a>
-              </h3>
-
-              <p class="card-text">
-                At Pixology we specialize in designing, building, shipping and scaling beautifu. At Pixology we
-                specialize in designing,
-                building, shipping and scaling beautiful.
-              </p>
-              </p><a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail artikel.html">Baca
-                Selengkapnya</a>
             </div>
+          </li>
+        <?php endif; ?>
 
-          </div>
-        </li>
-        <li>
-          <div class="blog-card">
-
-            <figure class="card-banner standard-banner">
-              <img src="./assets/img/blog-2.jpg" width="202" height="162" loading="lazy"
-                alt="Godaddy user flow solution for every individual" class="img-cover">
-            </figure>
-
-            <div class="card-content standard-card">
-
-              <div class="wrapper">
-                <a href="#" class="tag">Development</a>
+        <?php foreach (array_slice($sideArtikel, 0, 3) as $a): ?>
+          <li>
+            <div class="blog-card">
+              <figure class="card-banner standard-banner">
+                <img src="<?= base_url('assets/img/artikel/' . $a['foto_artikel']); ?>"
+                  alt="<?= $lang == 'id' ? $a['alt_artikel_id'] : $a['alt_artikel_en']; ?>"
+                  class="img-cover" loading="lazy">
+              </figure>
+              <div class="card-content standard-card">
+                <div class="wrapper">
+                  <a href="#" class="tag"><?= $lang == 'id' ? $a['nama_kategori'] : $a['nama_kategori']; ?></a>
+                </div>
+                <h3 class="h3">
+                  <a href="<?= base_url($lang == 'id'
+                              ? 'id/artikel/' . $a['slug_kategori_id'] . '/' . $a['slug_artikel_id']
+                              : 'en/article/' . $a['slug_kategori_en'] . '/' . $a['slug_artikel_en']); ?>"
+                    class="card-title">
+                    <?= $lang == 'id' ? $a['judul_artikel_id'] : $a['judul_artikel_en']; ?>
+                  </a>
+                </h3>
               </div>
-
-              <h3 class="h3">
-                <a href="#" class="card-title">Godaddy user flow solution for every individual</a>
-              </h3>
-
             </div>
+          </li>
+        <?php endforeach; ?>
 
-          </div>
-        </li>
-
-        <li>
-          <div class="blog-card">
-
-            <figure class="card-banner standard-banner">
-              <img src="./assets/img/blog-3.png" width="202" height="162" loading="lazy"
-                alt="Business solution for every individual" class="img-cover">
-            </figure>
-
-            <div class="card-content standard-card">
-
-              <div class="wrapper">
-                <a href="#" class="tag">Development</a>
-              </div>
-
-              <h3 class="h3">
-                <a href="#" class="card-title">Business solution for every individual</a>
-              </h3>
-
-            </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="blog-card">
-
-            <figure class="card-banner standard-banner">
-              <img src="./assets/img/blog-4.png" width="202" height="162" loading="lazy"
-                alt="How to gain pro experience ar figma update version" class="img-cover">
-            </figure>
-
-            <div class="card-content standard-card">
-
-              <div class="wrapper">
-                <a href="#" class="tag">Development</a>
-              </div>
-
-              <h3 class="h3">
-                <a href="#" class="card-title">How to gain pro experience ar figma update version</a>
-              </h3>
-
-            </div>
-
-          </div>
-        </li>
       </ul>
     </div>
   </section>
 
-
-
-  <!-- 
-        - #KONTAK
-      -->
-
+  <!-- kontak -->
   <section class="section blog" id="kontak" aria-label="kontak">
     <div class="container">
 
-      <p class="section-subtitle text-center has-before">Kontak</p>
-      <p class="section-subtitle text-center"
-        style="margin-bottom: 40px; margin-top: 10px;color: var(--raisin-black-1);">Hubungi
-        kami untuk menerima
-        penawaran
-        terbaik </p>
+      <p class="section-subtitle text-center has-before">
+        <?= $lang == 'id' ? $contactMeta['nama_halaman_id'] : $contactMeta['nama_halaman_en']; ?>
+      </p>
+
+      <p class="section-subtitle text-center" style="margin-bottom: 40px; margin-top: 10px; color: var(--raisin-black-1);">
+        <?= $lang == 'id' ? $contactMeta['deskripsi_halaman_id'] : $contactMeta['deskripsi_halaman_en']; ?>
+      </p>
+
       <ul class="blog-list">
 
         <li>
@@ -415,41 +264,10 @@
               </div>
 
               <h4>
-                <a style="margin-bottom: 20px; font-weight: 500;" href="#">Kami siap membantu anda dengan layanan
-                  terbaik</a>
+                <a style="margin-bottom: 20px; font-weight: 500;" href="#">
+                  <?= $lang == 'id' ? $kontak['deskripsi_kontak_id'] : $kontak['deskripsi_kontak_en']; ?>
+                </a>
               </h4>
-              <div class="social-list">
-                <div class="social-member">
-                  <div class="circle-icon">
-                    <ion-icon name="logo-instagram" aria-hidden="true"></ion-icon>
-                  </div>
-                  <div class="member-info">
-                    <h4>Instagram</h4>
-                    <p>Florist & UI Designer</p>
-                  </div>
-                </div>
-
-                <div class="social-member">
-                  <div class="circle-icon">
-                    <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
-                  </div>
-                  <div class="member-info">
-                    <h4>Lokasi</h4>
-                    <p>Workshop Coordinator</p>
-                  </div>
-                </div>
-
-                <div class="social-member">
-                  <div class="circle-icon">
-                    <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
-                  </div>
-                  <div class="member-info">
-                    <h4>Kontak</h4>
-                    <p>Event Stylist</p>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
           </div>
