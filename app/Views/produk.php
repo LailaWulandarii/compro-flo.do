@@ -7,98 +7,38 @@
   <section class=" section produk" id="produk" aria-label="produk">
     <div class="container">
       <h1 class="h1 section-title text-center" style="margin-bottom: 10px; font-size: 4rem;">
-        <span class="has-before">Produk</span>
+        <span class="has-before">
+          <?= $lang == 'id' ? $meta['nama_halaman_id'] : $meta['nama_halaman_en']; ?>
+        </span>
       </h1>
-      <p class="section-subtitle text-center" style="margin-bottom: 50px;">Temukan produk unggulan </p>
+      <p class="section-subtitle text-center" style="margin-bottom: 50px;">
+        <?= $lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']; ?>
+      </p>
 
 
       <ul class="grid-list">
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 835; --height: 429;">
-              <img src="./assets/img/premium fresh-4.jpg" width="835" height="429" loading="lazy"
-                alt="Premium Fresh Flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Premium Fresh Flowers</a>
-              </h4>
+        <?php foreach ($product as $p) : ?>
+          <li>
+            <div class="produk-card">
+              <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
+                <img src="<?= base_url('assets/img/produk/' . $p['foto_produk']); ?>"
+                  alt="<?= $lang == 'id' ? $p['alt_produk_id'] : $p['alt_produk_en']; ?>"
+                  width="416" height="429" loading="lazy" class="img-cover">
+              </figure>
+              <div class="card-content">
+                <h4 class="h4">
+                  <a href="<?= base_url($lang == 'id'
+                              ? 'id/produk/' . $p['slug_id']
+                              : 'en/product/' . $p['slug_en']); ?>" class="card-title">
+                    <?= $lang == 'id' ? $p['nama_produk_id'] : $p['nama_produk_en']; ?>
+                  </a>
+                </h4>
+              </div>
             </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/fresh flowers-1.jpg" width="416" height="429" loading="lazy"
-                alt="Fresh Flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Fresh Flowers</a>
-              </h4>
-            </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/artificial flowers-1.jpg" width="416" height="429" loading="lazy"
-                alt="Artificial Flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Artificial Flowers</a>
-              </h4>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/hand bouqet-1.jpg" width="416" height="429" loading="lazy" alt="Hand Bouqet"
-                class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Hand Bouqet</a>
-              </h4>
-            </div>
-
-          </div>
-        </li>
-
-        <li>
-          <div class="produk-card">
-
-            <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
-              <img src="./assets/img/standing flowers-1.jpg" width="416" height="429" loading="lazy"
-                alt="standing flowers" class="img-cover">
-            </figure>
-
-            <div class="card-content">
-              <h4 class="h4">
-                <a href="detail produk.html" class="card-title">Standing Flowers</a>
-              </h4>
-            </div>
-
-          </div>
-        </li>
-
+          </li>
+        <?php endforeach; ?>
       </ul>
+
 
     </div>
   </section>
