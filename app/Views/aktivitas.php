@@ -9,85 +9,49 @@
   <section class="section aktivitas" id="aktivitas" aria-label="aktivitas">
     <div class="container">
       <h1 class="h1 section-title text-center" style="margin-bottom: 10px; font-size: 4rem;">
-        <span class="has-before">Aktivitas</span>
+        <span class="has-before">
+          <?= $lang == 'id' ? $meta['nama_halaman_id'] : $meta['nama_halaman_en']; ?>
+        </span>
       </h1>
-      <p class="section-subtitle text-center" style="margin-bottom: 40px;">Berikut aktivitas </p>
+      <p class="section-subtitle text-center" style="margin-bottom: 40px;">
+        <?= $lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']; ?>
+      </p>
 
       <ul class="grid-list aktivitas-list">
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
+        <?php foreach ($allAktivitas as $aktivitas) : ?>
+          <li>
+            <a href="<?= base_url($lang == 'id'
+                        ? 'id/aktivitas/' . ($aktivitas['slug_kategori_id'] ?? 'kategori-tidak-ditemukan') . '/' . ($aktivitas['slug_aktivitas_id'] ?? 'aktivitas-tidak-ditemukan')
+                        : 'en/activity/' . ($aktivitas['slug_kategori_en'] ?? 'category-not-found') . '/' . ($aktivitas['slug_aktivitas_en'] ?? 'activity-not-found')); ?>"
+              class="aktivitas-link">
+              <div class="aktivitas-card">
+                <img src="<?= base_url('assets/img/aktivitas/' . $aktivitas['foto_aktivitas']); ?>"
+                  alt="<?= $lang == 'id' ? $aktivitas['alt_aktivitas_id'] : $aktivitas['alt_aktivitas_en']; ?>"
+                  class="aktivitas-img" width="100" loading="lazy">
 
-              <h3 class="h3">Workshop Merangkai</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
+                <h3 class="h3">
+                  <?= $lang == 'id' ? $aktivitas['judul_aktivitas_id'] : $aktivitas['judul_aktivitas_en']; ?>
+                </h3>
+
+                <div class="meta-row">
+                  <p class="kategori">
+                    <?= $lang == 'id' ? $aktivitas['nama_kategori_id'] ?? 'Tanpa Kategori' : $aktivitas['nama_kategori_en'] ?? 'Uncategorized'; ?>
+                  </p>
+                </div>
+
+                <p class="deskripsi">
+                  <?= $lang == 'id' ? $aktivitas['deskripsi_aktivitas_id'] : $aktivitas['deskripsi_aktivitas_en']; ?>
+                </p>
+
+                <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;">
+                  <?= $lang == 'id' ? 'Baca Selengkapnya' : 'Read More'; ?>
+                </a>
               </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p><a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
-
-              <h3 class="h3">Kolaborasi Brand</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
-              </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p>
-              <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
-
-              <h3 class="h3">Flo.do x Amigo cake</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
-              </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p><a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
-        <li>
-          <a href="detail aktivitas.html" class="aktivitas-link">
-            <div class="aktivitas-card">
-              <img src="./assets/img/hero1.png" class="aktivitas-img" width="100" loading="lazy"
-                alt="aktivitas icon">
-
-              <h3 class="h3">Flower Arrangement</h3>
-              <div class="meta-row">
-                <p class="kategori">Kolaborasi</p>
-              </div>
-              <p class="deskripsi">
-                Bersinergi dengan berbagai brand untuk menciptakan inovasi dan pengalaman baru.
-              </p><a class="see-more" style="font-size: 1.3rem; margin-top: 10px;" href="detail aktivitas.html">Baca
-                Selengkapnya</a>
-            </div>
-          </a>
-        </li>
-
+            </a>
+          </li>
+        <?php endforeach; ?>
       </ul>
+
     </div>
   </section>
 
