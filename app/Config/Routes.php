@@ -16,9 +16,9 @@ $routes->group('id', function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('kontak', 'ContactController::index');
     $routes->get('tentang', 'AboutController::index');
-    $routes->get('artikel', 'ArticleeController::index');
-    $routes->get('artikel/(:segment)', 'ArticleeController::index/$1');
-    $routes->get('artikel/(:segment)/(:segment)', 'ArticleeController::detail/$1/$2');
+    $routes->get('artikel', 'ArticleController::index');
+    $routes->get('artikel/(:segment)', 'ArticleController::index/$1');
+    $routes->get('artikel/(:segment)/(:segment)', 'ArticleController::detail/$1/$2');
 
     $routes->get('aktivitas', 'ActivityController::index');
     $routes->get('aktivitas/(:segment)', 'ActivityController::index/$1');
@@ -35,9 +35,9 @@ $routes->group('en', function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('contact', 'ContactController::index');
     $routes->get('about', 'AboutController::index');
-    $routes->get('article', 'ArticleeController::index');
-    $routes->get('article/(:segment)', 'ArticleeController::index/$1');
-    $routes->get('article/(:segment)/(:segment)', 'ArticleeController::detail/$1/$2');
+    $routes->get('article', 'ArticleController::index');
+    $routes->get('article/(:segment)', 'ArticleController::index/$1');
+    $routes->get('article/(:segment)/(:segment)', 'ArticleController::detail/$1/$2');
 
     $routes->get('activity', 'ActivityController::index');
     $routes->get('activity/(:segment)', 'ActivityController::index/$1');
