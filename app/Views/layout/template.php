@@ -96,7 +96,15 @@ if (!empty($categoriesAktivitas)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flo.do - Blooming your memories</title>
+    <?php if (isset($metaCategory)): ?>
+        <title><?= $lang == 'id' ? $metaCategory['title_id'] : $metaCategory['title_en']; ?></title>
+        <meta name="description" content="<?= $lang == 'id' ? $metaCategory['meta_desc_id'] : $metaCategory['meta_desc_en']; ?>">
+    <?php else: ?>
+        <title><?= $lang == 'id' ? $meta['title_id'] : $meta['title_en']; ?></title>
+        <meta name="description" content="<?= $lang == 'id' ? $meta['meta_desc_id'] : $meta['meta_desc_en']; ?>">
+    <?php endif; ?>
+
+    <link rel="canonical" href="<?= isset($canonical) && !empty($canonical) ? $canonical : base_url() ?>">
 
     <!-- 
     - favicon
@@ -106,8 +114,8 @@ if (!empty($categoriesAktivitas)) {
     <!-- 
     - custom css link
   -->
+    <link rel="icon" href="<?= base_url('assets/img/logo2.png'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
-    <link rel="canonical" href="<?= isset($canonical) && !empty($canonical) ? $canonical : base_url() ?>">
     <!-- 
     - google font link
   -->
