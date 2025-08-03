@@ -137,9 +137,9 @@ class ProductController extends BaseController
 
         $canonical = base_url("$lang/" . ($lang === 'id' ? 'produk' : 'product') . '/' . $slugCheck);
 
-        if (current_url() !== $canonical) {
-            return redirect()->to($canonical);
-        }
+        // if (current_url() !== $canonical) {
+        //     return redirect()->to($canonical);
+        // }
 
         // Siapkan data untuk ditampilkan ke view
         $data = [
