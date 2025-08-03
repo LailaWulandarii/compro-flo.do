@@ -367,14 +367,27 @@ if (!empty($categoriesAktivitas)) {
 
             <!-- Footer Bottom -->
             <div class="footer-bottom">
+
                 <p class="copyright">
-                    &copy; <?= date('Y'); ?> Flo.do. All Rights Reserved.
+                    &copy; 2022 Pixology. All Rights Reserved by codewithsadee
                 </p>
+
                 <ul class="footer-bottom-list">
-                    <li><a href="#" class="footer-bottom-link">Terms and conditions</a></li>
-                    <li><a href="#" class="footer-bottom-link">Privacy policy</a></li>
-                    <li><a href="#" class="footer-bottom-link">Login / Signup</a></li>
+
+                    <li>
+                        <a href="#" class="footer-bottom-link">Terms and conditions</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-bottom-link">Privacy policy</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-bottom-link">Login / Signup</a>
+                    </li>
+
                 </ul>
+
             </div>
         </div>
     </footer>
@@ -415,6 +428,16 @@ if (!empty($categoriesAktivitas)) {
             current = (current + 1) % slides.length;
             slides[current].classList.add('active');
         }, 3000); // ganti slide tiap 3 detik
+    </script>
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('active');
+            } else {
+                header.classList.remove('active');
+            }
+        });
     </script>
 
 </body>
