@@ -29,7 +29,7 @@
     <div class="container">
 
       <figure class="tentang-banner">
-        <img src="./assets/img/tentang-1.jpg" style="border-radius: 30px;" width="355" height="356"
+        <img src="<?= base_url('assets/img/profil/' . $profil['foto_perusahaan']); ?>" alt="<?= $lang == 'id' ? $profil['alt_foto_perusahaan_id'] : $profil['alt_foto_perusahaan_en']; ?>" style="border-radius: 30px;" width="355" height="356"
           loading="lazy" alt="tentang banner" class="w-100">
       </figure>
 
@@ -45,7 +45,9 @@
           <?= $lang == 'id' ? $profil['deskripsi_perusahaan_id'] : $profil['deskripsi_perusahaan_en']; ?>
         </p>
         <br>
-        <a class="see-more" style="font-size: 1.6rem;" href="tentang.html">Baca Selengkapnya</a>
+        <a href="<?= base_url($lang == 'id' ? 'id/tentang' : 'en/about') ?>" class="button-text button-bg">
+          <?= lang('bahasa.Baca Selengkapnya'); ?>
+        </a>
       </div>
 
     </div>
@@ -123,18 +125,22 @@
               <div class="aktivitas-card">
                 <img src="<?= base_url('assets/img/aktivitas/' . $a['foto_aktivitas']); ?>"
                   alt="<?= $lang == 'id' ? $a['alt_aktivitas_id'] : $a['alt_aktivitas_en']; ?>"
-                  class="aktivitas-img" width="100" loading="lazy">
+                  class="aktivitas-img" loading="lazy">
 
-                <h3 class="h3"><?= $lang == 'id' ? $a['judul_aktivitas_id'] : $a['judul_aktivitas_en']; ?></h3>
-                <div class="meta-row">
+                <h3 class="h3" style="margin-top: 10px;"><?= $lang == 'id' ? $a['judul_aktivitas_id'] : $a['judul_aktivitas_en']; ?></h3>
+                <div class="meta-row" style="display: flex; justify-content: center;">
                   <p class="kategori">
                     <?= $lang == 'id' ? $a['nama_kategori_id'] : $a['nama_kategori_en']; ?>
                   </p>
                 </div>
                 <p class="deskripsi">
-                  <?= $lang == 'id' ? $a['snippet_id'] : $a['snippet_en']; ?>
+                  <?= $lang == 'id' ? $a['deskripsi_aktivitas_id'] : $a['deskripsi_aktivitas_en']; ?>
                 </p>
-                <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;">
+                <a href="<?= base_url(
+                            $lang === 'id'
+                              ? 'id/aktivitas/' . ($a['slug_kategori_id'] ?? 'kategori-tidak-ditemukan') . '/' . ($a['slug_aktivitas_id'] ?? 'aktivitas-tidak-ditemukan')
+                              : 'en/activity/' . ($a['slug_kategori_en'] ?? 'category-not-found') . '/' . ($a['slug_aktivitas_en'] ?? 'activity-not-found')
+                          ); ?>" class="see-more" style="font-size: 1.4rem; margin-top: 10px;">
                   <?= lang('bahasa.Baca Selengkapnya'); ?>
                 </a>
               </div>

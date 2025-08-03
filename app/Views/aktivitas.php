@@ -33,9 +33,9 @@
                   <?= $lang == 'id' ? $aktivitas['judul_aktivitas_id'] : $aktivitas['judul_aktivitas_en']; ?>
                 </h3>
 
-                <div class="meta-row">
+                <div class="meta-row" style="display: flex; justify-content: center;">
                   <p class="kategori">
-                    <?= $lang == 'id' ? $aktivitas['nama_kategori_id'] ?? 'Tanpa Kategori' : $aktivitas['nama_kategori_en'] ?? 'Uncategorized'; ?>
+                    <?= $aktivitas['nama_kategori'] ?? ($lang == 'id' ? 'Tanpa Kategori' : 'Uncategorized'); ?>
                   </p>
                 </div>
 
@@ -43,8 +43,12 @@
                   <?= $lang == 'id' ? $aktivitas['deskripsi_aktivitas_id'] : $aktivitas['deskripsi_aktivitas_en']; ?>
                 </p>
 
-                <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;">
-                  <?= $lang == 'id' ? 'Baca Selengkapnya' : 'Read More'; ?>
+                <a href="<?= base_url(
+                            $lang === 'id'
+                              ? 'id/aktivitas/' . ($aktivitas['slug_kategori_id'] ?? 'kategori-tidak-ditemukan') . '/' . ($aktivitas['slug_aktivitas_id'] ?? 'aktivitas-tidak-ditemukan')
+                              : 'en/activity/' . ($aktivitas['slug_kategori_en'] ?? 'category-not-found') . '/' . ($aktivitas['slug_aktivitas_en'] ?? 'activity-not-found')
+                          ); ?>" class="see-more" style="font-size: 1.4rem; margin-top: 10px;">
+                  <?= lang('bahasa.Baca Selengkapnya'); ?>
                 </a>
               </div>
             </a>

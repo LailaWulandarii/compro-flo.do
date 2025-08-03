@@ -20,10 +20,10 @@
         <?php foreach ($product as $p) : ?>
           <li>
             <div class="produk-card">
-              <figure class="card-banner img-holder" style="--width: 416; --height: 429;">
+              <figure class="card-banner img-holder">
                 <img src="<?= base_url('assets/img/produk/' . $p['foto_produk']); ?>"
                   alt="<?= $lang == 'id' ? $p['alt_produk_id'] : $p['alt_produk_en']; ?>"
-                  width="416" height="429" loading="lazy" class="img-cover">
+                  loading="lazy" class="img-cover">
               </figure>
               <div class="card-content">
                 <h4 class="h4">
