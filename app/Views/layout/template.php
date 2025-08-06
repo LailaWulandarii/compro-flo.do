@@ -251,12 +251,12 @@ if (!empty($categoriesAktivitas)) {
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="<?= $indonesia_url; ?>" class="<?= $lang === 'id' ? 'active disabled' : ''; ?>">
+                                <a href="<?= $indonesia_url; ?>" class="<?= $lang === 'id' ? 'active disabled' : ''; ?>"> <img src="<?= base_url('assets/img/logo/indonesia.jpg') ?>" style="width: 20px;" alt="">
                                     Indonesia
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= $english_url; ?>" class="<?= $lang === 'en' ? 'active disabled' : ''; ?>">
+                                <a href="<?= $english_url; ?>" class="<?= $lang === 'en' ? 'active disabled' : ''; ?>"><img src="<?= base_url('assets/img/logo/english.jpg') ?>" style="width: 20px;" alt="">
                                     English
                                 </a>
                             </li>
@@ -352,6 +352,7 @@ if (!empty($categoriesAktivitas)) {
                         <?php foreach ($marketplace as $m): ?>
                             <li>
                                 <a href="<?= $m['link_marketplace']; ?>" class="footer-link" target="_blank">
+                                    <img src="<?= base_url('assets/img/logo/' . $m['logo_marketplace']); ?>" alt="<?= $m['nama_marketplace']; ?>" style="width: 20px; height: 20px; margin-right: 5px;">
                                     <?= $m['nama_marketplace']; ?>
                                 </a>
                             </li>
