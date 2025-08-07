@@ -179,7 +179,7 @@ if (!empty($categoriesAktivitas)) {
                     <!-- Dropdown Aktivitas -->
                     <?php
                     $uriSegments = explode('/', uri_string());
-                    $currentPath = $uriSegments[1] ?? ''; // Ambil segmen kedua setelah bahasa
+                    $currentPath = $uriSegments[1] ?? '';
                     $isActivityActive = ($currentPath === $activityLink);
                     ?>
 
