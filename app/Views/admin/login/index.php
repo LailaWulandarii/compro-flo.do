@@ -29,7 +29,7 @@
 							<input id="password" name="password" type="password" class="form-control password" placeholder="password" required="required">
 						</div><!--//form-group-->
 						<div class="text-center">
-							<button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Log In</button>
+							<button type="submit" style="background-color: hsl(340, 100%, 63%); color: white;" class="btn w-100 mx-auto">Log In</button>
 						</div>
 					</form>
 				</div><!--//auth-form-container-->
