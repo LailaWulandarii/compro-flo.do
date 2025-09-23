@@ -141,7 +141,9 @@ if (!empty($categoriesAktivitas)) {
         <div class="container">
 
             <a href="#" class="logo">Flo.do</a>
-
+            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            </button>
             <nav class="navbar" data-navbar>
 
                 <div class="wrapper">
@@ -408,7 +410,43 @@ if (!empty($categoriesAktivitas)) {
 
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navTogglers = document.querySelectorAll('[data-nav-toggler]');
+            const navbar = document.querySelector('[data-navbar]');
+            const overlay = document.querySelector('[data-overlay]');
 
+            const toggleNavbar = () => {
+                navbar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('nav-active');
+            };
+
+            navTogglers.forEach(toggler => {
+                toggler.addEventListener('click', toggleNavbar);
+            });
+
+            const navLinks = document.querySelectorAll('[data-nav-link]');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navbar.classList.contains('active')) {
+                        toggleNavbar();
+                    }
+                });
+            });
+
+            // Tambahkan fungsionalitas untuk dropdown mobile
+            const dropdownTogglers = document.querySelectorAll('.dropdown-toggle');
+            dropdownTogglers.forEach(toggler => {
+                toggler.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const parentItem = toggler.closest('.navbar-item.dropdown');
+                    parentItem.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 
     <!-- 
     - custom js link
