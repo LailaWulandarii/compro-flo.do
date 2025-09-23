@@ -426,12 +426,15 @@ if (!empty($categoriesAktivitas)) {
                 toggler.addEventListener('click', toggleNavbar);
             });
 
-            const navLinks = document.querySelectorAll('[data-nav-link]');
+            const navLinks = document.querySelectorAll('.navbar-list a');
 
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
-                    if (navbar.classList.contains('active')) {
-                        toggleNavbar();
+                    // Periksa apakah tautan yang diklik bukan dropdown toggle
+                    if (!link.classList.contains('dropdown-toggle')) {
+                        if (navbar.classList.contains('active')) {
+                            toggleNavbar();
+                        }
                     }
                 });
             });
