@@ -1611,7 +1611,7 @@ body {
  * responsive for large than 992px screen
  */
 
-@media (min-width: 992px) {
+@media (min-width: 991px) {
 
   /**
    * REUSED STYLE
@@ -1661,16 +1661,36 @@ body {
 
 
   .navbar-link {
-    position: relative;
-    color: var(--cool-gray);
-    text-transform: capitalize;
-    font-size: unset;
-    font-weight: var(--fw-500);
+    /* Properti ini yang membuat teks dan ikon sejajar */
     display: flex;
     align-items: center;
+    /* Sejajarkan item secara vertikal di tengah */
     justify-content: space-between;
-    gap: 6px;
+    /* Dorong teks ke kiri dan ikon ke kanan */
+    padding: 15px 0;
+    font-size: 1.1rem;
+
+    /* Aturan lain yang sudah ada */
+    color: var(--cool-gray);
+    text-transform: capitalize;
+    font-weight: var(--fw-500);
     text-decoration: none;
+  }
+
+  .navbar-link span {
+    display: flex;
+    /* Mungkin tidak perlu, tapi bisa jadi fallback */
+    align-items: center;
+  }
+
+  .navbar-item.dropdown>.dropdown-menu {
+    /* Tetap seperti ini untuk membuat sub-menu muncul di bawah */
+    position: static;
+    display: none;
+  }
+
+  .navbar-item.dropdown.active>.dropdown-menu {
+    display: block;
   }
 
   .chevron-icon {
@@ -1714,134 +1734,6 @@ body {
 
   .header .btn:is(:hover, :focus) {
     color: var(--white);
-  }
-
-  /* Untuk layar mobile dan tablet */
-  @media (max-width: 991px) {
-
-    /* Tombol Buka Menu (Hamburger) */
-    .nav-open-btn {
-      display: block;
-      /* Tampilkan tombol hamburger di layar kecil */
-      font-size: 2rem;
-      /* Atur ukuran ikon */
-      cursor: pointer;
-      color: var(--raisin-black-1);
-    }
-
-    /* Menu Navigasi */
-    .navbar {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      /* Sembunyikan menu di luar layar */
-      max-width: 320px;
-      width: 100%;
-      height: 100vh;
-      background-color: var(--white);
-      visibility: hidden;
-      /* Sembunyikan secara visual */
-      z-index: 1001;
-      /* Pastikan di atas konten lain */
-      transition: 0.5s cubic-bezier(0.5, 0.2, 0.2, 1);
-      padding: 20px;
-      display: block;
-      overflow-y: auto;
-      /* Aktifkan scroll jika konten menu panjang */
-    }
-
-    /* Tampilan menu saat aktif */
-    .navbar.active {
-      right: 0;
-      /* Geser menu masuk ke layar */
-      visibility: visible;
-      transition: 0.5s cubic-bezier(0.5, 0.2, 0.2, 1);
-    }
-
-    /* Wrapper di dalam menu (untuk logo dan tombol tutup) */
-    .navbar .wrapper {
-      display: flex;
-      /* Tampilkan wrapper */
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--gray);
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-    }
-
-    .nav-close-btn {
-      display: block;
-      /* Tampilkan tombol tutup */
-      font-size: 2rem;
-      cursor: pointer;
-      color: var(--raisin-black-1);
-    }
-
-    /* Overlay */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background-color: hsla(0, 0%, 0%, 0.5);
-      z-index: 1000;
-      pointer-events: none;
-      opacity: 0;
-      transition: var(--transition-1);
-    }
-
-    /* Overlay saat aktif */
-    .overlay.active {
-      pointer-events: auto;
-      opacity: 1;
-    }
-
-    .navbar-list {
-      flex-direction: column;
-      /* Tata letak menu menjadi vertikal */
-      gap: 0;
-      /* Hapus jarak horizontal antar item */
-    }
-
-    .navbar-item:not(:last-child) {
-      border-bottom: 1px solid var(--gray-lighter);
-    }
-
-    .navbar-link {
-      padding: 15px 0;
-      font-size: 1.1rem;
-    }
-
-    .navbar-link::before {
-      display: none;
-      /* Sembunyikan efek underline di mobile */
-    }
-
-    .header .btn {
-      display: none;
-      /* Sembunyikan tombol di mobile */
-    }
-
-    /* Dropdown */
-    .navbar-item.dropdown>.dropdown-menu {
-      position: static;
-      display: none;
-      visibility: visible;
-      background-color: transparent;
-      border: none;
-      padding-left: 15px;
-    }
-
-    .navbar-item.dropdown.active>.dropdown-menu {
-      display: block;
-    }
-
-    .navbar-item.dropdown .dropdown-menu li a {
-      padding: 8px 0;
-      font-size: 0.9rem;
-    }
-
-    .navbar-item.dropdown .dropdown-menu li a:is(:hover, :focus) {
-      color: var(--mustard);
-    }
   }
 
   /**
