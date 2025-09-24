@@ -555,6 +555,17 @@ body {
   text-align: center;
 }
 
+.hero-carousel img {
+  width: 100%;
+  /* Pastikan gambar mengisi lebar kontainernya */
+  height: auto;
+  /* Jaga rasio aspek gambar agar tidak terdistorsi */
+  display: block;
+  /* Menghilangkan spasi ekstra di bawah gambar */
+  object-fit: cover;
+  /* Memastikan gambar menutupi area yang ditentukan tanpa terdistorsi */
+}
+
 .hero-banner img {
   max-width: 400px;
   height: auto;
@@ -562,10 +573,18 @@ body {
 }
 
 .hero-carousel {
-  position: relative;
+  display: flex;
+  /* Menggunakan Flexbox untuk memusatkan slide */
+  justify-content: center;
+  /* Memusatkan gambar secara horizontal */
+  align-items: center;
+  /* Memusatkan gambar secara vertikal */
+  overflow: hidden;
+  /* Mencegah gambar yang meluap dari kontainer */
+  /* position: relative;
   width: 400px;
   height: auto;
-  overflow: hidden;
+  overflow: hidden; */
 }
 
 .slide {
