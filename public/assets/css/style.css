@@ -1569,7 +1569,7 @@ body {
  * responsive for large than 992px screen
  */
 
-@media (min-width: 991px) {
+@media (min-width: 992px) {
 
   /**
    * REUSED STYLE
@@ -1619,36 +1619,16 @@ body {
 
 
   .navbar-link {
-    /* Properti ini yang membuat teks dan ikon sejajar */
-    display: flex;
-    align-items: center;
-    /* Sejajarkan item secara vertikal di tengah */
-    justify-content: space-between;
-    /* Dorong teks ke kiri dan ikon ke kanan */
-    padding: 15px 0;
-    font-size: 1.1rem;
-
-    /* Aturan lain yang sudah ada */
+    position: relative;
     color: var(--cool-gray);
     text-transform: capitalize;
+    font-size: unset;
     font-weight: var(--fw-500);
-    text-decoration: none;
-  }
-
-  .navbar-link span {
     display: flex;
-    /* Mungkin tidak perlu, tapi bisa jadi fallback */
     align-items: center;
-  }
-
-  .navbar-item.dropdown>.dropdown-menu {
-    /* Tetap seperti ini untuk membuat sub-menu muncul di bawah */
-    position: static;
-    display: none;
-  }
-
-  .navbar-item.dropdown.active>.dropdown-menu {
-    display: block;
+    justify-content: space-between;
+    gap: 6px;
+    text-decoration: none;
   }
 
   .chevron-icon {
@@ -1693,6 +1673,8 @@ body {
   .header .btn:is(:hover, :focus) {
     color: var(--white);
   }
+
+
 
   /**
    * HERO
