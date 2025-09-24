@@ -1330,6 +1330,12 @@ body {
     text-align: left;
     /* Memastikan teks rata kiri */
   }
+
+  .hero .container {
+    grid-template-columns: 1fr 1fr;
+    /* Kembali ke dua kolom untuk desktop */
+    align-items: center;
+  }
 }
 
 /* Untuk layar ukuran ponsel (maks 576px) */
@@ -1510,8 +1516,31 @@ body {
    * HERO
    */
 
+
   .hero .container {
-    gap: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Konten Hero (teks) */
+  .hero-content {
+    flex: 1;
+    /* Konten teks akan mengambil ruang yang tersedia */
+    text-align: left;
+    /* Teks akan rata kiri di tampilan desktop/tablet */
+  }
+
+  /* Carousel Hero (gambar) */
+  .hero-carousel {
+    flex: 1;
+    /* Gambar akan mengambil ruang yang sama seperti teks */
+  }
+
+  .hero-carousel img {
+    width: 100%;
+    height: auto;
   }
 
   .hero .wrapper {
