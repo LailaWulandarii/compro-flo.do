@@ -141,9 +141,7 @@ if (!empty($categoriesAktivitas)) {
         <div class="container">
 
             <a href="#" class="logo">Flo.do</a>
-            <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-                <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-            </button>
+
             <nav class="navbar" data-navbar>
 
                 <div class="wrapper">
@@ -410,12 +408,8 @@ if (!empty($categoriesAktivitas)) {
 
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navTogglers = document.querySelectorAll('[data-nav-toggler]');
-            const navbar = document.querySelector('[data-navbar]');
-            const overlay = document.querySelector('[data-overlay]');
 
+<<<<<<< HEAD
             const toggleNavbar = () => {
                 navbar.classList.toggle('active');
                 overlay.classList.toggle('active');
@@ -450,6 +444,8 @@ if (!empty($categoriesAktivitas)) {
             });
         });
     </script>
+=======
+>>>>>>> parent of 5e0d42c (add mobile navigation toggle functionality and dropdown support)
 
     <!-- 
     - custom js link
