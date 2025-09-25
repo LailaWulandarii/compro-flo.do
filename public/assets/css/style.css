@@ -1070,8 +1070,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 30px;
-  margin-block-end: 10px;
+  gap: 8;
+  /* margin-block-end: 10px; */
 }
 
 .blog-card.large p {
@@ -1868,9 +1868,7 @@ body {
   }
 
   .blog-card:not(.large) .wrapper {
-    gap: 10px;
     flex-wrap: nowrap;
-    margin-block-end: 10px;
   }
 
   .blog-card:not(.large) .publish-date {
