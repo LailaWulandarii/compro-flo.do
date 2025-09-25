@@ -992,13 +992,20 @@ body {
 
 .blog-list {
   display: grid;
+  /* display: flex; Atau grid */
+  flex-direction: column;
+  gap: 15px;
+  /* Atur nilai ini agar konsisten dengan margin-bottom */
 }
 
 .blog-list>li {
-  margin-bottom: 16px;
+  margin-bottom: 0;
   /* Atur sesuai selera */
 }
 
+.blog-card .card-text {
+  margin-block-start: 0px;
+}
 
 .blog-card .card-content a {
   font-size: 1.8rem !important;
@@ -1033,7 +1040,7 @@ body {
 .blog-card .standard-banner {
   border-radius: var(--radius-20);
   overflow: hidden;
-  margin-block-end: 20px;
+  /* margin-block-end: 20px; */
   width: 100px;
 }
 
@@ -1064,7 +1071,11 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 30px;
-  margin-block-end: 20px;
+  margin-block-end: 10px;
+}
+
+.blog-card.large p {
+  margin-top: 100px;
 }
 
 .blog-card .tag {
@@ -2002,9 +2013,9 @@ body {
    * blog
    */
 
-  .blog-list {
+  /* .blog-list {
     column-gap: 16px;
-  }
+  } */
 
   .blog-card.large {
     padding-inline-end: 35px;
