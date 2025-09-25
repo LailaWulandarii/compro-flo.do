@@ -1321,8 +1321,6 @@ body {
   .footer-top {
     /* Mengubah grid dari 5 kolom menjadi 2 kolom */
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    /* Menambah jarak antar kolom */
   }
 
   .footer-brand,
@@ -1882,7 +1880,6 @@ body {
 
   .footer-top {
     grid-template-columns: repeat(5, 1fr);
-    padding-block: 120px;
   }
 
   .footer-bottom {
