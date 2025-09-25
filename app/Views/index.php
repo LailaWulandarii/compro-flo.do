@@ -189,11 +189,11 @@
                   <a href="<?= base_url($lang == 'id'
                               ? 'id/artikel/' . $article[0]['slug_kategori_id'] . '/' . $article[0]['slug_artikel_id']
                               : 'en/article/' . $article[0]['slug_kategori_en'] . '/' . $article[0]['slug_artikel_en']); ?>"
-                    class="card-title" style="margin-top: 10px;">
+                    class="card-title">
                     <?= $lang == 'id' ? $article[0]['judul_artikel_id'] : $article[0]['judul_artikel_en']; ?>
                   </a>
                 </h3>
-                <p class="card-text">
+                <p class="card-text" style="margin-top: 0;">
                   <?= $lang == 'id' ? $article[0]['snippet_id'] : $article[0]['snippet_en']; ?>
                 </p>
                 <a class="see-more" style="font-size: 1.3rem; margin-top: 10px;"
