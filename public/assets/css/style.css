@@ -1546,7 +1546,12 @@ body {
 
   .hero-carousel img {
     width: 100%;
+    height: 30vh;
     height: auto;
+    object-fit: cover;
+    /* Ini sangat penting! Gambar akan di-crop agar memenuhi 100% lebar dan 70% tinggi kontainer tanpa terdistorsi. */
+    display: block;
+    /* Menghilangkan spasi ekstra di bawah gambar */
   }
 
   .hero .wrapper {
