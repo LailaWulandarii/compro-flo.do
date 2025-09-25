@@ -69,7 +69,6 @@
    * spacing
    */
 
-  /* --section-padding: 0px; */
 
   /**
    * shadow
@@ -204,8 +203,12 @@ body {
   padding-inline: 15px;
 }
 
+.section:first-of-type {
+  padding-block-start: 100px;
+}
+
 .section {
-  padding-block: 50px;
+  padding-block: 45px;
 }
 
 .h1,
@@ -1202,19 +1205,16 @@ body {
 \*-----------------------------------*/
 
 .footer {
+  padding-top: 0;
+  margin-top: 0;
   background-color: var(--raisin-black-1);
   color: var(--cool-gray);
 }
 
 .footer-top {
-  padding-block-end: 60px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  /* 5 kolom sama rata */
-  gap: 10px;
 }
-
-
 
 .footer-list-title {
   color: var(--white);
@@ -1337,6 +1337,11 @@ body {
     /* Kembali ke dua kolom untuk desktop */
     align-items: center;
   }
+
+  .see-more {
+    padding: 0px;
+  }
+
 }
 
 /* Untuk layar ukuran ponsel (maks 576px) */
