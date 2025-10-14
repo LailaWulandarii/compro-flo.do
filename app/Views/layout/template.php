@@ -103,11 +103,11 @@ if (!empty($categoriesAktivitas)) {
         $desc  = $lang == 'id' ? $metaProduct['meta_desc_id']  : $metaProduct['meta_desc_en'];
     } elseif (isset($metaArticle)) {
         // Detail Artikel
-        $title = $lang == 'id' ? $metaArticle['meta_title_id'] : $metaArticle['meta_title_en'];
+        $title = $lang == 'id' ? $metaArticle['title_artikel_id'] : $metaArticle['title_artikel_en'];
         $desc  = $lang == 'id' ? $metaArticle['meta_desc_id']  : $metaArticle['meta_desc_en'];
     } elseif (isset($metaActivity)) {
         // Detail Aktivitas
-        $title = $lang == 'id' ? $metaActivity['meta_title_id'] : $metaActivity['meta_title_en'];
+        $title = $lang == 'id' ? $metaActivity['title_aktivitas_id'] : $metaActivity['title_aktivitas_en'];
         $desc  = $lang == 'id' ? $metaActivity['meta_desc_id']  : $metaActivity['meta_desc_en'];
     } elseif (isset($metaCategory)) {
         // Halaman Kategori
