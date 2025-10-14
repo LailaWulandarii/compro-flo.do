@@ -96,13 +96,32 @@ if (!empty($categoriesAktivitas)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php if (isset($metaCategory)): ?>
-        <title><?= $lang == 'id' ? $metaCategory['title_id'] : $metaCategory['title_en']; ?></title>
-        <meta name="description" content="<?= $lang == 'id' ? $metaCategory['meta_desc_id'] : $metaCategory['meta_desc_en']; ?>">
-    <?php else: ?>
-        <title><?= $lang == 'id' ? $meta['title_id'] : $meta['title_en']; ?></title>
-        <meta name="description" content="<?= $lang == 'id' ? $meta['meta_desc_id'] : $meta['meta_desc_en']; ?>">
-    <?php endif; ?>
+    <?php
+    if (isset($metaProduct)) {
+        // Detail Produk
+        $title = $lang == 'id' ? $metaProduct['meta_title_id'] : $metaProduct['meta_title_en'];
+        $desc  = $lang == 'id' ? $metaProduct['meta_desc_id']  : $metaProduct['meta_desc_en'];
+    } elseif (isset($metaArticle)) {
+        // Detail Artikel
+        $title = $lang == 'id' ? $metaArticle['meta_title_id'] : $metaArticle['meta_title_en'];
+        $desc  = $lang == 'id' ? $metaArticle['meta_desc_id']  : $metaArticle['meta_desc_en'];
+    } elseif (isset($metaActivity)) {
+        // Detail Aktivitas
+        $title = $lang == 'id' ? $metaActivity['meta_title_id'] : $metaActivity['meta_title_en'];
+        $desc  = $lang == 'id' ? $metaActivity['meta_desc_id']  : $metaActivity['meta_desc_en'];
+    } elseif (isset($metaCategory)) {
+        // Halaman Kategori
+        $title = $lang == 'id' ? $metaCategory['title_id'] : $metaCategory['title_en'];
+        $desc  = $lang == 'id' ? $metaCategory['meta_desc_id'] : $metaCategory['meta_desc_en'];
+    } elseif (isset($meta)) {
+        // Halaman umum (Tentang, Kontak, dst)
+        $title = $lang == 'id' ? $meta['title_id'] : $meta['title_en'];
+        $desc  = $lang == 'id' ? $meta['meta_desc_id'] : $meta['meta_desc_en'];
+    }
+    ?>
+
+    <title><?= htmlspecialchars($title ?? ''); ?></title>
+    <meta name="description" content="<?= htmlspecialchars($desc ?? ''); ?>">
 
     <link rel="canonical" href="<?= isset($canonical) && !empty($canonical) ? $canonical : base_url() ?>">
 
