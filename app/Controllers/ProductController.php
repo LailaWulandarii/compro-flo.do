@@ -87,12 +87,17 @@ class ProductController extends BaseController
         $lang = session()->get('lang') ?? 'id';
         $productModel = new ProductModel();
 
+        // Cari produk berdasarkan slug ID atau EN
+        $product = $productModel->where('slug_id', $slug)
+            ->orWhere('slug_en', $slug)
+            ->first();
 
-        $product = $productModel->where('slug_id', $slug)->orWhere('slug_en', $slug)->first();
+        if (!$product) {
+            log_message('error', 'Produk tidak ditemukan dengan slug: ' . $slug);
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
 
-
-
-        $metaModel = new MetaModel();
+        // Ambil data profil dan lainnya
         $profilModel = new ProfilModel();
         $dataProfil = $profilModel->first();
 
@@ -103,50 +108,37 @@ class ProductController extends BaseController
         $kategoriAktivitasModel = new CategoryActivityModel();
         $categoriesAktivitas = $kategoriAktivitasModel->findAll();
 
-        // Cari produk berdasarkan slug (ID atau EN)
-
-        // Jika produk tidak ditemukan, tampilkan error 404
-        if (!$product) {
-            log_message('error', 'Produk tidak ditemukan dengan slug: ' . $slug);
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-        }
-
-        // Jika URL yang diakses tidak sesuai, redirect ke URL yang benar
-        // if (current_url() !== $canonical) {
-        //     return redirect()->to($canonical);
-        // }
-
-        // Ambil metadata untuk halaman detail produk
-        $metaData = $metaModel->where('id_meta', '7')->first();
-
-        log_message('debug', 'Produk ditemukan: ' . print_r($product, true));
-
-        // Ambil data sosial media
         $sosmedModel = new SosmedModel();
         $sosmed = $sosmedModel->findAll();
 
-        // Ambil data marketplace
         $marketplaceModel = new MarketplaceModel();
         $marketplace = $marketplaceModel->findAll();
 
-        // Ambil data kontak
         $kontakModel = new KontakModel();
         $kontak = $kontakModel->first();
 
-        $slugCheck = ($lang === 'id') ? $product['slug_id'] : $product['slug_en'];
+        $metaModel = new MetaModel();
+        $metaData = $metaModel->where('id_meta', '7')->first();
 
+        // Buat meta data khusus untuk produk
+        $metaProduct = [
+            'meta_title_id' => $product['title_id'],
+            'meta_title_en' => $product['title_en'],
+            'meta_desc_id'  => $product['meta_desc_id'],
+            'meta_desc_en'  => $product['meta_desc_en'],
+        ];
+
+        // Canonical URL
+        $slugCheck = ($lang === 'id') ? $product['slug_id'] : $product['slug_en'];
         $canonical = base_url("$lang/" . ($lang === 'id' ? 'produk' : 'product') . '/' . $slugCheck);
 
-        // if (current_url() !== $canonical) {
-        //     return redirect()->to($canonical);
-        // }
-
-        // Siapkan data untuk ditampilkan ke view
+        // Kirim semua data ke view
         $data = [
             'canonical' => $canonical,
             'product' => $product,
             'lang' => $lang,
             'meta' => $metaData,
+            'metaProduct' => $metaProduct,
             'activeMenu' => 'product',
             'profil' => $dataProfil,
             'kategori_teratas' => $kategoriTeratas,
