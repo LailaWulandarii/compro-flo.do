@@ -120,109 +120,79 @@ class ArticleController extends BaseController
     public function detail($categorySlug, $slug)
     {
         $data['activeMenu'] = 'article';
-        $lang = session()->get('lang') ?? 'id'; // cek lang nya
+        $lang = session()->get('lang') ?? 'id';
 
-        // Menambahkan log untuk melacak nilai slug yang diterima
-        log_message('debug', 'Slug yang diterima: ' . $slug);
-
-        // Inisialisasi model
         $articleModel = new ArtikelModel();
         $metaModel = new MetaModel();
         $profilModel = new ProfilModel();
-        $dataProfil = $profilModel->first();
+        $categoryModel = new CategoryArtikelModel();
+        $kategoriAktivitasModel = new CategoryActivityModel();
+        $sosmedModel = new SosmedModel();
+        $marketplaceModel = new MarketplaceModel();
+        $kontakModel = new KontakModel();
 
-        // Cek apakah produk ada berdasarkan slug untuk bahasa ID atau EN
+        // Ambil artikel berdasarkan slug
         $artikel = $articleModel->getArtikelWithCategory($slug);
 
-        $dataMeta = $metaModel->where('id_meta', '8')->first();
+        if (!$artikel) {
+            return redirect()->to('/')->with('error', 'Artikel tidak ditemukan');
+        }
 
-        $metaCategory = $artikel ? [
+        // Ambil kategori dari artikel
+        $category = $categoryModel->find($artikel['id_kategori_artikel']);
+        if (!$category) {
+            return redirect()->to('/')->with('error', 'Kategori artikel tidak ditemukan');
+        }
+
+        // Sisipkan nama & slug kategori ke array artikel
+        $artikel['nama_kategori'] = $lang === 'id' ? $category['nama_kategori_id'] : $category['nama_kategori_en'];
+        $artikel['slug_kategori'] = $lang === 'id' ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
+
+        // Redirect jika slug tidak sesuai bahasa
+        $expectedSlug = $lang === 'id' ? $artikel['slug_artikel_id'] : $artikel['slug_artikel_en'];
+        $expectedCategorySlug = $lang === 'id' ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
+        $urlPrefix = $lang === 'id' ? 'artikel' : 'article';
+
+        if ($slug !== $expectedSlug || $categorySlug !== $expectedCategorySlug) {
+            return redirect()->to("$lang/$urlPrefix/$expectedCategorySlug/$expectedSlug");
+        }
+
+        // Canonical URL
+        $canonical = base_url("$lang/$urlPrefix/$expectedCategorySlug/$expectedSlug");
+
+        // Artikel terkait dalam kategori yang sama (kecuali artikel ini)
+        $allArticle = $articleModel
+            ->join('tb_kategori_artikel', 'tb_kategori_artikel.id_kategori_artikel = tb_artikel.id_kategori_artikel', 'left')
+            ->where('tb_artikel.id_artikel !=', $artikel['id_artikel'])
+            ->where('tb_artikel.id_kategori_artikel', $artikel['id_kategori_artikel'])
+            ->orderBy('tb_artikel.created_at', 'DESC')
+            ->findAll(5);
+
+        // Metadata
+        $meta = $metaModel->where('id_meta', '9')->first();
+        $metaCategory = [
             'title_id' => $artikel['title_artikel_id'] ?? '',
             'title_en' => $artikel['title_artikel_en'] ?? '',
             'meta_desc_id' => $artikel['meta_desc_id'] ?? '',
             'meta_desc_en' => $artikel['meta_desc_en'] ?? ''
-        ] : null;
-
-        // Log hasil pencarian produk
-        log_message('debug', 'Produk ditemukan: ' . print_r($artikel, true));
-
-        // Jika produk tidak ditemukan, redirect atau tampilkan error
-        if (!$artikel) {
-            log_message('error', 'Artikel tidak ditemukan dengan slug: ' . $slug);
-            return redirect()->to('/')->with('error', 'Artikel tidak ditemukan');
-        }
-
-        // Ambil kategori artikel berdasarkan ID kategori
-        $categoryModel = new CategoryArtikelModel();
-        $category = $categoryModel->find($artikel['id_kategori_artikel']);
-        $categories = $categoryModel->findAll();
-
-        // Pastikan kategori ada
-        if (!$category) {
-            log_message('error', 'Kategori tidak ditemukan untuk artikel dengan ID: ' . $artikel['id_kategori_artikel']);
-            return redirect()->to('/')->with('error', 'Kategori artikel tidak ditemukan');
-        }
-
-        // Periksa apakah slug sesuai dengan bahasa yang digunakan
-        if (($lang === 'id' && $slug !== $artikel['slug_artikel_id']) || ($lang === 'en' && $slug !== $artikel['slug_artikel_en'])) {
-            // Log sebelum melakukan redireksi
-            log_message('debug', 'Slug yang sesuai untuk bahasa ' . $lang . ': ' . $artikel['slug_artikel_id'] . ' (ID) / ' . $artikel['slug_artikel_en'] . ' (EN)');
-
-            // Redirect ke URL yang benar
-            $correctedSlug = $lang === 'id' ? $artikel['slug_artikel_id'] : $artikel['slug_artikel_en'];
-            $categorySlug = $lang === 'id' ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
-            $urlmenu = $lang === 'id' ? 'artikel' : 'article';
-            return redirect()->to("$lang/$urlmenu/$categorySlug/$correctedSlug");
-        }
-
-        // Ambil artikel-artikel terbaru berdasarkan kategori yang sama
-        $allArticle = $articleModel
-            ->join('tb_kategori_artikel', 'tb_kategori_artikel.id_kategori_artikel = tb_artikel.id_kategori_artikel', 'left')
-            ->where('tb_artikel.id_artikel !=', $artikel['id_artikel']) // Menghindari artikel saat ini
-            ->where('tb_artikel.id_kategori_artikel', $artikel['id_kategori_artikel']) // Hanya artikel dari kategori yang sama
-            ->orderBy('tb_artikel.created_at', 'DESC')
-            ->findAll(5);
-
-        $categorySlugCheck = ($lang === 'id') ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
-        $slugCheck = ($lang === 'id') ? $artikel['slug_artikel_id'] : $artikel['slug_artikel_en'];
-
-        $canonical = base_url("$lang/" . (($lang === 'id') ? 'artikel' : 'article') . '/' . ($categorySlugCheck !== false ? $categorySlugCheck : '') . '/' . ($slugCheck !== false ? $slugCheck : ''));
-
-        $kategoriModel = new CategoryArtikelModel();
-        $kategoriAktivitasModel = new CategoryActivityModel();
-
-        // Ambil data kategori artikel terbanyak
-        $kategori_teratas = $kategoriModel->getKategoriTerbanyak();
-        $categoriesAktivitas = $kategoriAktivitasModel->findAll();
-
-        // Ambil data sosial media
-        $sosmedModel = new SosmedModel();
-        $sosmed = $sosmedModel->findAll();
-
-        // Ambil data marketplace
-        $marketplaceModel = new MarketplaceModel();
-        $marketplace = $marketplaceModel->findAll();
-
-        // Ambil data kontak
-        $kontakModel = new KontakModel();
-        $kontak = $kontakModel->first();
+        ];
 
         return view('detail_artikel', [
             'canonical' => $canonical,
             'lang' => $lang,
             'artikel' => $artikel,
             'category' => $category,
-            'meta' => $dataMeta,
+            'meta' => $meta,
+            'metaCategory' => $metaCategory,
             'allArticle' => $allArticle,
             'data' => $data,
-            'metaCategory' => $metaCategory,
-            'profil' => $dataProfil,
-            'kategori_teratas' => $kategori_teratas,
-            'sosmed' => $sosmed,
-            'marketplace' => $marketplace,
-            'kontak' => $kontak,
-            'categories' => $categories,
-            'categoriesAktivitas' => $categoriesAktivitas,
+            'profil' => $profilModel->first(),
+            'kategori_teratas' => $categoryModel->getKategoriTerbanyak(),
+            'sosmed' => $sosmedModel->findAll(),
+            'marketplace' => $marketplaceModel->findAll(),
+            'kontak' => $kontakModel->first(),
+            'categories' => $categoryModel->findAll(),
+            'categoriesAktivitas' => $kategoriAktivitasModel->findAll(),
         ]);
     }
 }
