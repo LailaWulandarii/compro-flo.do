@@ -116,28 +116,23 @@ class ActivityController extends BaseController
         $data['activeMenu'] = 'activity';
         $lang = session()->get('lang') ?? 'id';
 
-        // Log slug yang diterima
-        log_message('debug', 'Slug aktivitas yang diterima: ' . $slug);
 
-        // Inisialisasi model
+        // cek lang nya
+        // Menambahkan log untuk melacak nilai slug yang diterima
+        log_message('debug', 'Slug yang diterima: ' . $slug);
+
         $activityModel = new ActivityModel();
         $metaModel = new MetaModel();
         $profilModel = new ProfilModel();
-        $kategoriModel = new CategoryArtikelModel();
-        $kategoriAktivitasModel = new CategoryActivityModel();
-
-        // Ambil data profil dan kategori
         $dataProfil = $profilModel->first();
-        $categories = $kategoriModel->findAll();
-        $categoriesAktivitas = $kategoriAktivitasModel->findAll();
 
-        // Ambil aktivitas berdasarkan slug
+        // Cek apakah produk ada berdasarkan slug untuk bahasa ID atau EN
+        // $aktivitas = $activityModel->where('slug_aktivitas_id', $slug)->orWhere('slug_aktivitas_en', $slug)->first();
+
         $aktivitas = $activityModel->getActivityWithCategory($slug);
 
-        // Ambil meta umum (misalnya untuk halaman aktivitas)
-        $dataMeta = $metaModel->where('id_meta', '9')->first();
+        $dataMeta = $metaModel->where('id_meta', '8')->first();
 
-        // Buat meta kategori dari aktivitas (jika ada)
         $metaCategory = $aktivitas ? [
             'title_id' => $aktivitas['title_aktivitas_id'] ?? '',
             'title_en' => $aktivitas['title_aktivitas_en'] ?? '',
@@ -145,79 +140,94 @@ class ActivityController extends BaseController
             'meta_desc_en' => $aktivitas['meta_desc_en'] ?? ''
         ] : null;
 
-        // Jika aktivitas tidak ditemukan
+        $kategoriModel = new CategoryArtikelModel();
+        $categories = $kategoriModel->findAll();
+
+        // Ambil data kategori artikel terbanyak
+        $kategori_teratas = $kategoriModel->getKategoriTerbanyak();
+        // Ambil data sosial media
+        $sosmedModel = new SosmedModel();
+        $sosmed = $sosmedModel->findAll();
+
+        // Ambil data marketplace
+        $marketplaceModel = new MarketplaceModel();
+        $marketplace = $marketplaceModel->findAll();
+
+        // Ambil data kontak
+        $kontakModel = new KontakModel();
+        $kontak = $kontakModel->first();
+
+        // Log hasil pencarian produk
+        log_message('debug', 'Produk ditemukan: ' . print_r($aktivitas, true));
+
+        // Jika produk tidak ditemukan, redirect atau tampilkan error
         if (!$aktivitas) {
-            log_message('error', 'Aktivitas tidak ditemukan dengan slug: ' . $slug);
-            return redirect()->to('/')->with('error', 'Aktivitas tidak ditemukan');
+            log_message('error', 'artikel tidak ditemukan dengan slug: ' . $slug);
+            return redirect()->to('/')->with('error', 'artikel tidak ditemukan');
         }
 
-        // Ambil kategori aktivitas berdasarkan ID
+        // Ambil kategori artikel berdasarkan ID kategori
         $categoryModel = new CategoryActivityModel();
-        $category = $categoryModel->find($aktivitas['id_kategori_aktivitas']);
+        $category = $categoryModel->find($aktivitas['id_kategori_aktivitas']); // Ambil kategori berdasarkan id_kategori_aktivitas
 
+        // Pastikan kategori ada
         if (!$category) {
-            log_message('error', 'Kategori tidak ditemukan untuk aktivitas ID: ' . $aktivitas['id_kategori_aktivitas']);
-            return redirect()->to('/')->with('error', 'Kategori aktivitas tidak ditemukan');
+            log_message('error', 'Kategori tidak ditemukan untuk artikel dengan ID: ' . $aktivitas['id_kategori_aktivitas']);
+            return redirect()->to('/')->with('error', 'Kategori artikel tidak ditemukan');
         }
 
-        // Periksa kesesuaian slug dan bahasa
-        if (($lang === 'id' && $slug !== $aktivitas['slug_aktivitas_id']) || ($lang === 'en' && $slug !== $aktivitas['slug_aktivitas_en'])) {
+        // Periksa apakah slug sesuai dengan bahasa yang digunakan
+        if (($lang === 'id' && $slug !== $aktivitas['slug_aktivitas_id'])   || ($lang === 'en' && $slug !== $aktivitas['slug_aktivitas_en'])) {
+            // Log sebelum melakukan redireksi
+
+
+            // redirect ke url yang benar
             $correctedSlug = $lang === 'id' ? $aktivitas['slug_aktivitas_id'] : $aktivitas['slug_aktivitas_en'];
+            // Ambil slug kategori yang sesuai dengan bahasa
             $categorySlug = $lang === 'id' ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
+            // Redirect ke URL yang benar
+            $correctedSlug = $lang === 'id' ? $aktivitas['slug_aktivitas_id'] : $aktivitas['slug_aktivitas_en'];
             $urlmenu = $lang === 'id' ? 'aktivitas' : 'activity';
+
             return redirect()->to("$lang/$urlmenu/$categorySlug/$correctedSlug");
         }
 
-        // Ambil meta khusus aktivitas
-        $metaActivity = [
-            'title_aktivitas_id' => $aktivitas['title_aktivitas_id'],
-            'title_aktivitas_en' => $aktivitas['title_aktivitas_en'],
-            'meta_desc_id'       => $aktivitas['meta_desc_id'],
-            'meta_desc_en'       => $aktivitas['meta_desc_en'],
-        ];
-
-        // Ambil aktivitas lain dari kategori yang sama
+        // Ambil artikel-artikel terbaru
         $allAktivitas = $activityModel
             ->join('tb_kategori_aktivitas', 'tb_kategori_aktivitas.id_kategori_aktivitas = tb_aktivitas.id_kategori_aktivitas', 'left')
-            ->where('tb_aktivitas.id_aktivitas !=', $aktivitas['id_aktivitas'])
-            ->where('tb_aktivitas.id_kategori_aktivitas', $aktivitas['id_kategori_aktivitas'])
-            ->orderBy('tb_aktivitas.created_at', 'DESC')
+            ->where('tb_aktivitas.id_aktivitas !=', $aktivitas['id_aktivitas']) // Menghindari aktivitas saat ini
+            ->where('tb_aktivitas.id_kategori_aktivitas', $aktivitas['id_kategori_aktivitas']) // Hanya artikel dari kategori yang sama
+            ->orderBy('tb_aktivitas.created_at', 'DESC')  // Menentukan tabel yang dimaksud
             ->findAll(5);
 
-        // Ambil kategori artikel teratas
+        // Ambil data kategori artikel terbanyak
         $kategori_teratas = $kategoriModel->getKategoriTerbanyak();
 
-        // Ambil sosial media, marketplace, kontak
-        $sosmedModel = new SosmedModel();
-        $marketplaceModel = new MarketplaceModel();
-        $kontakModel = new KontakModel();
-
-        $sosmed = $sosmedModel->findAll();
-        $marketplace = $marketplaceModel->findAll();
-        $kontak = $kontakModel->first();
-
-        // Buat canonical URL
         $categorySlugCheck = ($lang === 'id') ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
         $slugCheck = ($lang === 'id') ? $aktivitas['slug_aktivitas_id'] : $aktivitas['slug_aktivitas_en'];
-        $canonical = base_url("$lang/" . (($lang === 'id') ? 'aktivitas' : 'activity') . '/' . ($categorySlugCheck ?: '') . '/' . ($slugCheck ?: ''));
+        $canonical = base_url("$lang/" . ($lang === 'id' ? 'aktivitas' : 'activity') . '/' . ($categorySlugCheck !== false ? $categorySlugCheck : '') . '/' . ($slugCheck !== false ? $slugCheck : ''));
 
-        // Kirim ke view
+        $kategoriAktivitasModel = new CategoryActivityModel();
+        $categoriesAktivitas = $kategoriAktivitasModel->findAll();
+
+        // Tampilkan halaman artikel (misalnya tampilan detail artikel)
         return view('detail_aktivitas', [
-            'canonical' => $canonical,
             'lang' => $lang,
+            'canonical' => $canonical,
             'aktivitas' => $aktivitas,
+            'metaCategory' => $metaCategory,
             'category' => $category,
             'meta' => $dataMeta,
-            'metaActivity' => $metaActivity,
-            'metaCategory' => $metaCategory,
             'allAktivitas' => $allAktivitas,
+            'data' => $data,
             'profil' => $dataProfil,
             'kategori_teratas' => $kategori_teratas,
             'sosmed' => $sosmed,
             'marketplace' => $marketplace,
             'kontak' => $kontak,
             'categories' => $categories,
-            'categoriesAktivitas' => $categoriesAktivitas,
+            'categoriesAktivitas' => $categoriesAktivitas
+
         ]);
     }
 }
