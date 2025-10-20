@@ -36,11 +36,6 @@ class ArticleController extends BaseController
 
         $canonical = base_url("$lang/" . ($lang === 'id' ? 'artikel' : 'article') . '/' . $slugCategory);
 
-        // COMENTING REDIRECT URL BCS LOOPING
-        // if (current_url() !== $canonical) {
-        //     return redirect()->to($canonical);
-        // }
-
         // Jika kategori tidak ditemukan, redire    ct ke halaman utama artikel
         if ($slugCategory && !$category) {
             log_message('warning', 'Kategori tidak ditemukan untuk slug: ' . $slugCategory);
@@ -192,11 +187,6 @@ class ArticleController extends BaseController
         $slugCheck = ($lang === 'id') ? $artikel['slug_artikel_id'] : $artikel['slug_artikel_en'];
 
         $canonical = base_url("$lang/" . (($lang === 'id') ? 'artikel' : 'article') . '/' . ($categorySlugCheck !== false ? $categorySlugCheck : '') . '/' . ($slugCheck !== false ? $slugCheck : ''));
-
-
-        // if (current_url() !== $canonical) {
-        //     return redirect()->to($canonical);
-        // }
 
         $kategoriModel = new CategoryArtikelModel();
         $kategoriAktivitasModel = new CategoryActivityModel();
