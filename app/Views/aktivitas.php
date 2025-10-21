@@ -6,13 +6,29 @@
         - #AKTIVITAS
       -->
 
+  <?php
+  // Ambil segment ke-3 dari URL
+  $segmentKategori = service('uri')->getSegment(3);
+  // Ambil nama halaman dari meta
+  $namaHalaman = $lang == 'id' ? $meta['nama_halaman_id'] : $meta['nama_halaman_en'];
+  // Ambil kategori dari aktivitas pertama, hanya kalau segmentKategori tidak kosong
+  $kategoriAktif = !empty($segmentKategori) && !empty($allAktivitas[0]['nama_kategori'])
+    ? $allAktivitas[0]['nama_kategori']
+    : null;
+  ?>
+
   <section class="section aktivitas" id="aktivitas" aria-label="aktivitas">
     <div class="container">
+
       <h1 class="h1 section-title text-center" style="margin-bottom: 10px; font-size: 4rem;">
         <span class="has-before">
-          <?= $lang == 'id' ? $meta['nama_halaman_id'] : $meta['nama_halaman_en']; ?>
+          <?= $namaHalaman; ?>
+          <?php if ($kategoriAktif): ?>
+            <?= $lang == 'id' ? " {$kategoriAktif}" : " {$kategoriAktif}"; ?>
+          <?php endif; ?>
         </span>
       </h1>
+
       <p class="section-subtitle text-center" style="margin-bottom: 40px;">
         <?= $lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']; ?>
       </p>
