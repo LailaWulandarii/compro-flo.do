@@ -10,7 +10,6 @@ $lang = session()->get('lang') ?? 'id';
     <h1 class="h1 section-title text-center" style="margin-bottom: 40px; font-size: 4rem;">
       <span class="has-before"><?= $lang === 'id' ? $product['nama_produk_id'] : $product['nama_produk_en'] ?></span>
     </h1>
-    <!-- <p class="section-subtitle text-center" style="margin-bottom: 0px;"> <?= $lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']; ?> </p> -->
     <div class="container">
       <ul class="blog-list">
         <li>
@@ -28,7 +27,6 @@ $lang = session()->get('lang') ?? 'id';
           <div class="blog-card">
 
             <div class="card-content">
-              <!-- <h3 class="h3 card-title"><?= $lang === 'id' ? $product['nama_produk_id'] : $product['nama_produk_en'] ?></h3> -->
               <p><?= $lang === 'id' ? $product['deskripsi_produk_id'] : $product['deskripsi_produk_en'] ?></p>
             </div>
 
