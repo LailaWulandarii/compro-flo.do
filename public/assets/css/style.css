@@ -558,15 +558,40 @@ body {
   text-align: center;
 }
 
+/* PERBAIKAN DI SINI */
+.hero-carousel {
+  display: grid;
+  /* Ganti dari flex ke grid */
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  position: relative;
+  /* Tambahkan ini */
+}
+
 .hero-carousel img {
   width: 100%;
-  /* Pastikan gambar mengisi lebar kontainernya */
   height: auto;
-  /* Jaga rasio aspek gambar agar tidak terdistorsi */
   display: block;
-  /* Menghilangkan spasi ekstra di bawah gambar */
   object-fit: cover;
-  /* Memastikan gambar menutupi area yang ditentukan tanpa terdistorsi */
+}
+
+.slide {
+  grid-area: 1 / 1;
+  /* Semua slide ditumpuk di grid cell yang sama */
+  width: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  visibility: hidden;
+  /* Sembunyikan slide tidak aktif */
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  /* Tampilkan slide aktif */
+  position: relative;
+  z-index: 1;
 }
 
 .hero-banner img {
@@ -574,36 +599,6 @@ body {
   height: auto;
   display: block;
 }
-
-.hero-carousel {
-  display: flex;
-  /* Menggunakan Flexbox untuk memusatkan slide */
-  justify-content: center;
-  /* Memusatkan gambar secara horizontal */
-  align-items: center;
-  /* Memusatkan gambar secara vertikal */
-  overflow: hidden;
-  /* Mencegah gambar yang meluap dari kontainer */
-  /* position: relative;
-  width: 400px;
-  height: auto;
-  overflow: hidden; */
-}
-
-.slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  transition: transform 1s ease-in-out;
-}
-
-.slide.active {
-  opacity: 1;
-  position: relative;
-}
-
 
 /*-----------------------------------*\
   #aktivitas
@@ -950,28 +945,6 @@ body {
 .tentang .section-title {
   color: var(--white);
   margin-block: 20px 35px;
-}
-
-.email-field {
-  background-color: var(--dark-pink);
-  color: var(--white);
-  font-size: var(--fs-9);
-  min-height: 60px;
-  padding-inline: 20px;
-  border-radius: var(--radius-8);
-  margin-block-end: 20px;
-  box-shadow: var(--shadow-5);
-  outline: 3px solid transparent;
-  outline-offset: 0;
-  transition: var(--transition-1);
-}
-
-.email-field:focus {
-  outline-color: var(--white);
-}
-
-.email-field::placeholder {
-  color: inherit;
 }
 
 
@@ -1613,28 +1586,12 @@ body {
    * tentang
    */
 
-  .tentang-form {
-    position: relative;
-  }
-
-  .email-field {
-    margin-block-end: 0;
-  }
-
-  .tentang-form .btn-secondary {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    bottom: 5px;
-    height: auto;
-    padding-inline: 25px;
-  }
-
 
 
   /**
    * blog
    */
+
 
   .blog-card:not(.large) {
     display: flex;
@@ -1839,17 +1796,6 @@ body {
   .tentang-banner {
     order: 1;
     margin-inline-start: auto;
-  }
-
-  .email-field {
-    min-height: 80px;
-    padding-inline: 40px;
-  }
-
-  .tentang-form .btn-secondary {
-    top: 10px;
-    right: 10px;
-    bottom: 10px;
   }
 
 
