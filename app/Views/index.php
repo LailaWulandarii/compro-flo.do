@@ -24,8 +24,7 @@
   </section>
 
   <!-- about -->
-  <section class="section tentang has-bg-image" id="tentang" aria-label="tentang"
-    style="background-color: var(--light-pink)">
+  <section class="section tentang" id="tentang" aria-label="tentang">
     <div class="container">
 
       <figure class="tentang-banner">
@@ -34,37 +33,34 @@
       </figure>
 
       <div class="tentang-content">
-
-        <p class="section-subtitle has-before">
-          <?= $lang == 'id' ? $aboutMeta['nama_halaman_id'] : $aboutMeta['nama_halaman_en']; ?>
+        <h1 class="h1 section-title" style="color: black; margin-bottom: 4px;">
+          <span class="has-before"><?= $lang == 'id' ? $aboutMeta['nama_halaman_id'] : $aboutMeta['nama_halaman_en']; ?></span>
+        </h1>
+        <p class="section-subtitle" style="margin-bottom: 20px;">
+          <?= $lang == 'id' ? $aboutMeta['deskripsi_halaman_id'] : $aboutMeta['deskripsi_halaman_en']; ?>
         </p>
-        <h2 class="h2 section-title">
-          <span class="has-before"><?= $lang == 'id' ? $aboutMeta['deskripsi_halaman_id'] : $aboutMeta['deskripsi_halaman_en']; ?> |</span>
-        </h2>
         <p class="card-text">
           <?= $lang == 'id' ? $profil['deskripsi_perusahaan_id'] : $profil['deskripsi_perusahaan_en']; ?>
         </p>
         <br>
-        <a href="<?= base_url($lang == 'id' ? 'id/tentang' : 'en/about') ?>" class="button-text button-bg">
+        <a href="<?= base_url($lang == 'id' ? 'id/tentang' : 'en/about') ?>" style="color: black;">
           <?= lang('bahasa.Baca Selengkapnya'); ?>
         </a>
       </div>
 
     </div>
+
   </section>
 
   <!-- produk -->
   <section class=" section produk" id="produk" aria-label="produk">
     <div class="container">
-
-      <p class="section-subtitle has-before text-left">
-        <?= $lang == 'id' ? $productMeta['nama_halaman_id'] : $productMeta['nama_halaman_en']; ?>
-      </p>
-
-      <div class="row header-row">
-        <h2 class="h2 section-title text-left">
+      <h1 class="h1 section-title text-center" style="margin-bottom: 0px;"> <span class="has-before"><?= $lang == 'id' ? $productMeta['nama_halaman_id'] : $productMeta['nama_halaman_en']; ?></span>
+      </h1>
+      <div class="row header-row" style="margin: 0px 10px;">
+        <p class="section-subtitle text-left">
           <?= $lang == 'id' ? $productMeta['deskripsi_halaman_id'] : $productMeta['deskripsi_halaman_en']; ?>
-        </h2>
+        </p>
         <a class="h2 section-title text-right see-more" href="<?= base_url($lang == 'id' ? 'id/produk' : 'en/product'); ?>">
           <?= lang('bahasa.Lihat Semua'); ?>
         </a>
@@ -101,14 +97,12 @@
   <!-- aktivitas -->
   <section class="section aktivitas" id="aktivitas" aria-label="aktivitas">
     <div class="container">
-      <p class="section-subtitle has-before text-left">
-        <?= $lang == 'id' ? $aktivitasMeta['nama_halaman_id'] : $aktivitasMeta['nama_halaman_en']; ?>
-      </p>
-
-      <div class="row header-row">
-        <h2 class="h2 section-title text-left">
+      <h1 class="h1 section-title text-center " style="margin-bottom: 0px;"><span class="has-before"><?= $lang == 'id' ? $aktivitasMeta['nama_halaman_id'] : $aktivitasMeta['nama_halaman_en']; ?></span>
+      </h1>
+      <div class="row header-row" style="margin: 0px 10px;">
+        <p class=" section-subtitle text-left">
           <?= $lang == 'id' ? $aktivitasMeta['deskripsi_halaman_id'] : $aktivitasMeta['deskripsi_halaman_en']; ?>
-        </h2>
+        </p>
         <a href="<?= base_url($lang == 'id' ? 'id/aktivitas' : 'en/activity'); ?>" class="h2 section-title text-right see-more">
           <?= lang('bahasa.Lihat Semua'); ?>
         </a>
@@ -156,15 +150,10 @@
   <!-- artikel -->
   <section class="section blog" id="artikel" aria-label="artikel">
     <div class="container">
-
-      <p class="section-subtitle text-center has-before">
-        <?= $lang == 'id' ? $articleMeta['nama_halaman_id'] : $articleMeta['nama_halaman_en']; ?>
+      <h1 class="h1 section-title text-center" style="margin-bottom: 4px;"><span class="has-before"><?= $lang == 'id' ? $articleMeta['nama_halaman_id'] : $articleMeta['nama_halaman_en']; ?></span>
+      </h1>
+      <p class="section-subtitle text-center" style="margin-bottom: 20px;"> <?= $lang == 'id' ? $articleMeta['deskripsi_halaman_id'] : $articleMeta['deskripsi_halaman_en']; ?>
       </p>
-
-      <h2 class="h2 section-title text-center">
-        <?= $lang == 'id' ? $articleMeta['deskripsi_halaman_id'] : $articleMeta['deskripsi_halaman_en']; ?>
-      </h2>
-
       <ul class="blog-list">
 
         <?php if (!empty($article)): ?>
@@ -238,16 +227,12 @@
 
   <!-- kontak -->
   <section class="section blog" id="kontak" aria-label="kontak">
+
+    <h1 class="h1 section-title text-center" style="margin-bottom: 4px;"><span class="has-before"><?= $lang == 'id' ? $contactMeta['nama_halaman_id'] : $contactMeta['nama_halaman_en']; ?></span>
+    </h1>
+    <p class="section-subtitle text-center" style="margin-bottom: 20px;"> <?= $lang == 'id' ? $contactMeta['deskripsi_halaman_id'] : $contactMeta['deskripsi_halaman_en']; ?>
+    </p>
     <div class="container">
-
-      <p class="section-subtitle text-center has-before">
-        <?= $lang == 'id' ? $contactMeta['nama_halaman_id'] : $contactMeta['nama_halaman_en']; ?>
-      </p>
-
-      <p class="section-subtitle text-center" style="margin-bottom: 40px; margin-top: 10px; color: var(--raisin-black-1);">
-        <?= $lang == 'id' ? $contactMeta['deskripsi_halaman_id'] : $contactMeta['deskripsi_halaman_en']; ?>
-      </p>
-
       <ul class="blog-list">
 
         <li>
