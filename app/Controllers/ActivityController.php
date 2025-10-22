@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ActivityModel;
 use App\Models\CategoryActivityModel;
-use App\Models\CategoryArtikelModel;
 use App\Models\KontakModel;
 use App\Models\MarketplaceModel;
 use App\Models\MetaModel;
@@ -38,7 +37,7 @@ class ActivityController extends BaseController
         // Log untuk kategori yang dicari
         log_message('info', 'Mencari kategori dengan slug: ' . $slugCategory);
 
-        // Jika kategori tidak ditemukan, redirect ke halaman utama artikel
+        // Jika kategori tidak ditemukan, redirect ke halaman utama aktivitas
         if ($slugCategory && !$category) {
             log_message('warning', 'Kategori tidak ditemukan untuk slug: ' . $slugCategory);
             return redirect()->to(base_url($lang === 'id' ? 'id/aktivitas' : 'en/activity'));
@@ -55,12 +54,12 @@ class ActivityController extends BaseController
             }
         }
 
-        // Ambil artikel berdasarkan kategori (jika ada)
+        // Ambil aktivitas berdasarkan kategori (jika ada)
         $categoryId = $category ? $category['id_kategori_aktivitas'] : null;
         $allAktivitas = $aktivitasModel->getArticlesWithCategory($categoryId, $lang);
 
-        // Log jumlah artikel yang ditemukan
-        log_message('info', 'Jumlah artikel yang ditemukan: ' . count($allAktivitas));
+        // Log jumlah aktivitas yang ditemukan
+        log_message('info', 'Jumlah aktivitas yang ditemukan: ' . count($allAktivitas));
 
         // Ambil semua kategori untuk navigasi
         $categories = $categoryModel->getAllCategories($lang);
@@ -74,11 +73,10 @@ class ActivityController extends BaseController
             'meta_desc_en' => $category['meta_desc_en'] ?? ''
         ] : null;
 
-        $kategoriArtikelModel = new CategoryArtikelModel();
         $kategoriAktivitasModel = new CategoryActivityModel();
-        // Ambil data kategori artikel terbanyak
-        $kategori_teratas = $kategoriArtikelModel->getKategoriTerbanyak();
-        $categoriess = $kategoriArtikelModel->findAll();
+        // Ambil data kategori aktivitas terbanyak
+        $kategori_teratas = $kategoriAktivitasModel->getKategoriTerbanyak();
+        $categoriess = $kategoriAktivitasModel->findAll();
         $categoriesAktivitas = $kategoriAktivitasModel->findAll();
 
         $sosmedModel = new SosmedModel();
@@ -140,10 +138,10 @@ class ActivityController extends BaseController
             'meta_desc_en' => $aktivitas['meta_desc_en'] ?? ''
         ] : null;
 
-        $kategoriModel = new CategoryArtikelModel();
+        $kategoriModel = new CategoryActivityModel();
         $categories = $kategoriModel->findAll();
 
-        // Ambil data kategori artikel terbanyak
+        // Ambil data kategori aktivitas terbanyak
         $kategori_teratas = $kategoriModel->getKategoriTerbanyak();
         // Ambil data sosial media
         $sosmedModel = new SosmedModel();
@@ -162,18 +160,18 @@ class ActivityController extends BaseController
 
         // Jika produk tidak ditemukan, redirect atau tampilkan error
         if (!$aktivitas) {
-            log_message('error', 'artikel tidak ditemukan dengan slug: ' . $slug);
-            return redirect()->to('/')->with('error', 'artikel tidak ditemukan');
+            log_message('error', 'aktivitas tidak ditemukan dengan slug: ' . $slug);
+            return redirect()->to('/')->with('error', 'aktivitas tidak ditemukan');
         }
 
-        // Ambil kategori artikel berdasarkan ID kategori
+        // Ambil kategori aktivitas berdasarkan ID kategori
         $categoryModel = new CategoryActivityModel();
         $category = $categoryModel->find($aktivitas['id_kategori_aktivitas']); // Ambil kategori berdasarkan id_kategori_aktivitas
 
         // Pastikan kategori ada
         if (!$category) {
-            log_message('error', 'Kategori tidak ditemukan untuk artikel dengan ID: ' . $aktivitas['id_kategori_aktivitas']);
-            return redirect()->to('/')->with('error', 'Kategori artikel tidak ditemukan');
+            log_message('error', 'Kategori tidak ditemukan untuk aktivitas dengan ID: ' . $aktivitas['id_kategori_aktivitas']);
+            return redirect()->to('/')->with('error', 'Kategori aktivitas tidak ditemukan');
         }
 
         // Periksa apakah slug sesuai dengan bahasa yang digunakan
@@ -192,15 +190,15 @@ class ActivityController extends BaseController
             return redirect()->to("$lang/$urlmenu/$categorySlug/$correctedSlug");
         }
 
-        // Ambil artikel-artikel terbaru
+        // Ambil aktivitas-aktivitas terbaru
         $allAktivitas = $activityModel
             ->join('tb_kategori_aktivitas', 'tb_kategori_aktivitas.id_kategori_aktivitas = tb_aktivitas.id_kategori_aktivitas', 'left')
             ->where('tb_aktivitas.id_aktivitas !=', $aktivitas['id_aktivitas']) // Menghindari aktivitas saat ini
-            ->where('tb_aktivitas.id_kategori_aktivitas', $aktivitas['id_kategori_aktivitas']) // Hanya artikel dari kategori yang sama
+            ->where('tb_aktivitas.id_kategori_aktivitas', $aktivitas['id_kategori_aktivitas']) // Hanya aktivitas dari kategori yang sama
             ->orderBy('tb_aktivitas.created_at', 'DESC')  // Menentukan tabel yang dimaksud
             ->findAll(5);
 
-        // Ambil data kategori artikel terbanyak
+        // Ambil data kategori aktivitas terbanyak
         $kategori_teratas = $kategoriModel->getKategoriTerbanyak();
 
         $categorySlugCheck = ($lang === 'id') ? $category['slug_kategori_id'] : $category['slug_kategori_en'];
@@ -210,7 +208,7 @@ class ActivityController extends BaseController
         $kategoriAktivitasModel = new CategoryActivityModel();
         $categoriesAktivitas = $kategoriAktivitasModel->findAll();
 
-        // Tampilkan halaman artikel (misalnya tampilan detail artikel)
+        // Tampilkan halaman aktivitas (misalnya tampilan detail aktivitas)
         return view('detail_aktivitas', [
             'lang' => $lang,
             'canonical' => $canonical,
