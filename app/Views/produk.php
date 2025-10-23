@@ -4,7 +4,7 @@
 <article>
 
 
-  <section class=" section produk" id="produk" aria-label="produk">
+  <section class=" section produk" id="produk" aria-label="produk" style="background-color: white  ;">
     <div class="container">
       <h1 class="h1 section-title text-center" style="margin-bottom: 10px; font-size: 4rem;">
         <span class="has-before">
