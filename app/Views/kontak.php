@@ -11,15 +11,12 @@ $kontak = $kontakModel->first();
 
 <?= $this->section('content'); ?>
 <article>
-  <section class="section blog" id="kontak" aria-label="kontak">
+  <section class="section blog" id="kontak" aria-label="kontak" style="background-color: white  ;">
     <div class="container">
 
-      <p class="section-subtitle text-center has-before">
-        <?= $lang == 'id' ? $meta['nama_halaman_id'] : $meta['nama_halaman_en']; ?>
-      </p>
-
-      <p class="section-subtitle text-center" style="margin-bottom: 40px; margin-top: 10px; color: var(--raisin-black-1);">
-        <?= $lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']; ?>
+      <h1 class="h1 section-title text-center" style="margin-bottom: 4px;"><span class="has-before"><?= $lang == 'id' ? $meta['nama_halaman_id'] : $meta['nama_halaman_en']; ?></span>
+      </h1>
+      <p class="section-subtitle text-center" style="margin-bottom: 20px;"> <?= $lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']; ?>
       </p>
 
       <ul class="blog-list">
@@ -40,7 +37,7 @@ $kontak = $kontakModel->first();
             <div class="card-content">
 
               <div class="wrapper">
-                <a href="#" class="tag ">Hubungi Kami</a>
+                <a href="#" class="tag "><?= esc($lang == 'id' ? $meta['deskripsi_halaman_id'] : $meta['deskripsi_halaman_en']); ?></a>
               </div>
 
               <h4>
