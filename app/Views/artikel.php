@@ -15,7 +15,7 @@
     ? $allArticle[0]['nama_kategori']
     : null;
   ?>
-  <section class="section aktivitas" id="aktivitas" aria-label="aktivitas">
+  <section class="section aktivitas" id="aktivitas" aria-label="aktivitas" style="background-color: white  ;">
     <div class="container">
       <h1 class="h1 section-title text-center" style="margin-bottom: 10px; font-size: 4rem;">
         <span class="has-before">
