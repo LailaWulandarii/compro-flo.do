@@ -65,7 +65,7 @@ class Profil extends BaseController
         // log_message('info', 'Data yang akan diperbarui: ' . json_encode($updateSlider));
 
         // Handle file uploads
-        $fileFields = ['logo_perusahaan', 'favicon_perusahaan', 'foto_perusahaan'];
+        $fileFields = ['logo_perusahaan', 'foto_perusahaan'];
         foreach ($fileFields as $field) {
             $file = $this->request->getFile($field);
             if ($file && $file->isValid() && !$file->hasMoved()) {
@@ -83,6 +83,20 @@ class Profil extends BaseController
                     log_message('error', "File {$field} gagal diupload. Format atau ukuran tidak valid.");
                     return redirect()->to(base_url('admin/profil/edit'))->with('error', 'File harus berupa gambar (JPEG, PNG, GIF) dan maksimal 2MB.');
                 }
+            }
+        }
+        $file = $this->request->getFile('favicon_perusahaan');
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            // Validasi tipe file dan ukuran
+            if (in_array($file->getMimeType(), ['image/x-icon', 'image/png']) && $file->getSize() <= 102400) {
+                // Simpan langsung sebagai favicon.ico di folder public
+                $file->move(FCPATH, 'favicon.ico', true); // 'true' = overwrite file lama
+
+                log_message('info', 'Favicon perusahaan berhasil diupload dan diganti.');
+            } else {
+                log_message('error', 'Upload favicon gagal. Format harus .ico atau .png dan maksimal 100KB.');
+                return redirect()->back()->with('error', 'Upload favicon gagal. Format harus .ico atau .png dan maksimal 100KB.');
             }
         }
 
