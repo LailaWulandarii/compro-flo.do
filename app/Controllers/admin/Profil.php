@@ -37,11 +37,6 @@ class Profil extends BaseController
         $profil = $profilModel->where('username', $username_pengguna)->first();
         $slider = $sliderModel->first();
 
-        // if (!$profil) {
-        //     log_message('error', "Profil tidak ditemukan untuk username: {$username_pengguna}");
-        //     return redirect()->to(base_url('admin/profil/edit'))->with('error', 'Profil tidak ditemukan.');
-        // }
-
         log_message('info', "Memproses update profil untuk username: {$username_pengguna}");
 
         $updateData = [
@@ -56,13 +51,6 @@ class Profil extends BaseController
         ];
 
         log_message('info', 'Data yang akan diperbarui: ' . json_encode($updateData));
-
-        // $updateSlider = [ 
-        //     'caption_slider_id' => $this->request->getPost('caption_slider_id'),
-        //     'caption_slider_en' => $this->request->getPost('caption_slider_en'),
-        // ];
-
-        // log_message('info', 'Data yang akan diperbarui: ' . json_encode($updateSlider));
 
         // Handle file uploads
         $fileFields = ['logo_perusahaan', 'foto_perusahaan'];
