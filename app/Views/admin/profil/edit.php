@@ -2,19 +2,19 @@
 <?= $this->section('content'); ?>
 
 <div class="app-content pt-3 p-md-3 p-lg-4">
-	<div class="container-xl">
-		<h1 class="app-page-title">Ubah Profil Perusahaan</h1>
-		<?php if (!empty(session()->getFlashdata('error'))) : ?>
-			<div class="alert alert-danger" role="alert">
-				<h4>Error</h4>
-				<p><?php echo session()->getFlashdata('error'); ?></p>
-			</div>
-		<?php endif; ?>
-		<?php if (session()->has('success')) : ?>
-			<div class="alert alert-success">
-				<?= session('success') ?>
-			</div>
-		<?php endif; ?>
+    <div class="container-xl">
+        <h1 class="app-page-title">Ubah Profil Perusahaan</h1>
+        <?php if (!empty(session()->getFlashdata('error'))) : ?>
+            <div class="alert alert-danger" role="alert">
+                <h4>Error</h4>
+                <p><?php echo session()->getFlashdata('error'); ?></p>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->has('success')) : ?>
+            <div class="alert alert-success">
+                <?= session('success') ?>
+            </div>
+        <?php endif; ?>
 
         <div class="row gy-4">
             <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start mb-4 mt-4">
@@ -24,7 +24,7 @@
 
                         <div class="mb-3 mt-4">
                             <label for="nama_perusahaan" class="form-label">Nama Perusahaan</label>
-                            <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" value="<?= esc($profil_pengguna['nama_perusahaan'] ); ?>" required>
+                            <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" value="<?= esc($profil_pengguna['nama_perusahaan']); ?>" required>
                         </div>
 
                         <div class="mb-3">
@@ -70,10 +70,20 @@
 
                         <div class="mb-3">
                             <label for="favicon_perusahaan" class="form-label">Favicon Perusahaan</label>
-                            <input type="file" class="form-control" id="favicon_perusahaan" name="favicon_perusahaan">
-                            <img width="150px" class="img-thumbnail" src="<?= base_url('assets/img/profil/' . esc($profil_pengguna['favicon_perusahaan'] ?? 'default.png')); ?>">
-                        </div>
+                            <input type="file" class="form-control" id="favicon_perusahaan" name="favicon_perusahaan" accept=".ico,.png">
+                            <small class="form-text text-muted">Format: .ico atau .png, maksimal 100KB</small>
 
+                            <?php if (file_exists(FCPATH . 'favicon.ico')): ?>
+                                <div class="mt-2">
+                                    <img width="32" height="32" class="img-thumbnail" src="<?= base_url('favicon.ico?' . time()); ?>" alt="Favicon Perusahaan">
+                                    <span class="ms-2 text-muted">Favicon saat ini</span>
+                                </div>
+                            <?php else: ?>
+                                <div class="mt-2">
+                                    <span class="text-muted">Belum ada favicon yang diupload</span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                         <div class="mb-3">
                             <label for="foto_perusahaan" class="form-label">Foto Perusahaan</label>
                             <input type="file" class="form-control" id="foto_perusahaan" name="foto_perusahaan">
