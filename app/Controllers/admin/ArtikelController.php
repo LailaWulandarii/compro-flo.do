@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers\admin;
+
 use App\Models\ArtikelModel;
 use App\Models\CategoryArtikelModel;
 use App\Models\KategoriModel;
@@ -191,36 +192,25 @@ class ArtikelController extends BaseController
         $slug_artikel_id = $this->generateSlug($judul_artikel_id);
         $slug_artikel_en = $this->generateSlug($judul_artikel_en);
 
-        // Validasi judul artikel dalam bahasa Indonesia
-        // if (!preg_match('/^[a-zA-Z0-9\s]+$/', $judul_artikel_id)) {
-        //     session()->setFlashdata('error', 'Judul artikel dalam bahasa Indonesia hanya boleh berisi huruf dan angka.');
-        //     return redirect()->back()->withInput();
-        // }
+        $artikelData = $this->artikelModel->find($id_artikel);
+        $file_foto = $this->request->getFile('foto_artikel');
 
-        // // Validasi judul artikel dalam bahasa Inggris
-        // if (!preg_match('/^[a-zA-Z0-9\s]+$/', $judul_artikel_en)) {
-        //     session()->setFlashdata('error', 'Judul artikel dalam bahasa Inggris hanya boleh berisi huruf dan angka.');
-        //     return redirect()->back()->withInput();
-        // }
+        // Cek apakah ada file foto baru yang diupload
+        if ($file_foto && $file_foto->isValid() && !$file_foto->hasMoved()) {
+            // Hapus foto lama
+            $oldFilePath = 'assets/img/artikel/' . $artikelData['foto_artikel'];
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
 
-        // $file_foto = $this->request->getFile('foto_artikel');
-
-        // // Jika file foto di-upload
-        // if ($file_foto->isValid()) {
-        //     // Hapus foto lama jika ada
-        //     $artikelData = $this->artikelModel->find($id_artikel);
-        //     $oldFilePath = 'assets/img/artikel/' . $artikelData->foto_artikel;
-        //     if (file_exists($oldFilePath)) {
-        //         unlink($oldFilePath);
-        //     }
-
-        //     // Simpan foto baru
-        //     $newFileName = $file_foto->getRandomName();
-        //     $file_foto->move('asset-user/images', $newFileName);
-        // } else {
-        //     $artikelData = $this->artikelModel->find($id_artikel);
-        //     $newFileName = $artikelData->foto_artikel;
-        // }
+            // Simpan foto baru
+            $currentDateTime = date('dmYHis');
+            $newFileName = str_replace(' ', '-', "{$judul_artikel_id}_{$currentDateTime}.{$file_foto->getExtension()}");
+            $file_foto->move('assets/img/artikel', $newFileName);
+        } else {
+            // Jika tidak ada foto baru, pakai foto lama
+            $newFileName = $artikelData['foto_artikel'];
+        }
 
         // Update data artikel
         $data = [
@@ -233,7 +223,7 @@ class ArtikelController extends BaseController
             'snippet_en' => $snippet_en,
             'deskripsi_artikel_id' => $deskripsi_artikel_id,
             'deskripsi_artikel_en' => $deskripsi_artikel_en,
-            // 'foto_artikel' => $newFileName,
+            'foto_artikel' => $newFileName,
             'alt_artikel_id' => $alt_artikel_id,
             'alt_artikel_en' => $alt_artikel_en,
             'title_artikel_id' => $title_artikel_id,
