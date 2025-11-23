@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\admin;
+namespace App\Controllers\Admin;
 
 use App\Models\ActivityModel;
 use App\Models\CategoryActivityModel;
@@ -126,7 +126,7 @@ class Aktivitas extends BaseController
                 'slug_aktivitas_id' => $slug_aktivitas_id,
                 'slug_aktivitas_en' => $slug_aktivitas_en,
             ];
-    
+
             $aktivitasModel->save($data);
 
             session()->setFlashdata('success', 'Data berhasil disimpan');

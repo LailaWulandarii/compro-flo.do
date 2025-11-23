@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\admin;
+namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\CategoryActivityModel;
@@ -75,22 +75,21 @@ class KategoriAktivitas extends BaseController
             return redirect()->back()->withInput();
         }
 
-            $aktivitas_kategori_model = new CategoryActivityModel();
-            $data = [
-                'nama_kategori_id' => $this->request->getVar("nama_kategori_id"),
-                'nama_kategori_en' => $this->request->getVar("nama_kategori_en"),
-                'title_kategori_id' => $title_kategori_id,
-                'title_kategori_en' => $title_kategori_en,
-                'meta_desc_id' => $meta_desc_id,
-                'meta_desc_en' => $meta_desc_en,
-                'slug_kategori_id' => $slug_kategori_id,
-                'slug_kategori_en' => $slug_kategori_en,
-            ];
-            $aktivitas_kategori_model->save($data);
+        $aktivitas_kategori_model = new CategoryActivityModel();
+        $data = [
+            'nama_kategori_id' => $this->request->getVar("nama_kategori_id"),
+            'nama_kategori_en' => $this->request->getVar("nama_kategori_en"),
+            'title_kategori_id' => $title_kategori_id,
+            'title_kategori_en' => $title_kategori_en,
+            'meta_desc_id' => $meta_desc_id,
+            'meta_desc_en' => $meta_desc_en,
+            'slug_kategori_id' => $slug_kategori_id,
+            'slug_kategori_en' => $slug_kategori_en,
+        ];
+        $aktivitas_kategori_model->save($data);
 
-            session()->setFlashdata('success', 'Data berhasil disimpan');
-            return redirect()->to(base_url('admin/kategoriAktivitas/index'));
-        
+        session()->setFlashdata('success', 'Data berhasil disimpan');
+        return redirect()->to(base_url('admin/kategoriAktivitas/index'));
     }
 
 
