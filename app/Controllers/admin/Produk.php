@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\admin;
+namespace App\Controllers\Admin;
 
 use App\Models\ProductModel;
 use App\Models\ProdukModel;
@@ -64,7 +64,7 @@ class Produk extends BaseController
         $meta_title_en = $this->request->getVar("meta_title_en");
         $meta_desc_id = $this->request->getVar("meta_desc_id");
         $meta_desc_en = $this->request->getVar("meta_desc_en");
-        
+
 
         // Buat slug_id dari judul_artikel
         $slug_id = $this->generateSlug($nama_produk_id);
@@ -118,7 +118,7 @@ class Produk extends BaseController
                 'meta_title_en' => $meta_title_en,
                 'meta_desc_id' => $meta_desc_id,
                 'meta_desc_en' => $meta_desc_en,
-                
+
             ];
             $produkModel->save($data);
 
